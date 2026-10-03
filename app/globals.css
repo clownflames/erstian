@@ -1,26 +1,451 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ==========================================================================
+   ERSTIAN — design tokens
+   Dark-first corporate identity: near-black canvas, off-white type,
+   a single red accent used with restraint.
+   ========================================================================== */
+
+@theme {
+  /* Surfaces */
+  --color-ink: #07070a;
+  --color-ink-raise: #0b0c10;
+  --color-surface: #101116;
+  --color-surface-2: #16171d;
+  --color-surface-3: #1d1e25;
+
+  /* Type */
+  --color-bone: #f4f3f0;
+  --color-bone-dim: #a4a6ad;
+  --color-fog: #7e818a;
+  --color-ash: #4a4d57;
+
+  /* Lines */
+  --color-line: #1c1e25;
+  --color-line-soft: #14161c;
+
+  /* Brand */
+  --color-red: #e2000a;
+  --color-red-hot: #ff2b33;
+  --color-red-deep: #8f0008;
+  /* A lighter tint of the brand red reserved for small type — the pure brand
+     red only reaches 4.06:1 on the near-black canvas, which is not enough for
+     11px labels. Graphics, rules and fills keep the true brand red. */
+  --color-signal: #ff4a3f;
+
+  /* Typography -------------------------------------------------- */
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  --font-display: var(--font-display), var(--font-body), ui-sans-serif,
+    system-ui, sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, "SFMono-Regular", monospace;
+
+  /* Fluid display scale — clamps are computed against the 1800px max
+     container so 1440 / 1920 / 2560 all feel intentional. */
+  --text-display: clamp(2.6rem, 7.2vw, 9.25rem);
+  --text-display--line-height: 0.9;
+  --text-display--letter-spacing: -0.042em;
+  --text-display--font-weight: 700;
+
+  --text-hero-sub: clamp(1.5rem, 3.1vw, 4rem);
+  --text-hero-sub--line-height: 1.02;
+  --text-hero-sub--letter-spacing: -0.032em;
+  --text-hero-sub--font-weight: 600;
+
+  --text-h2: clamp(1.9rem, 4.35vw, 5.5rem);
+  --text-h2--line-height: 0.97;
+  --text-h2--letter-spacing: -0.036em;
+  --text-h2--font-weight: 700;
+
+  --text-h3: clamp(1.25rem, 1.7vw, 2.0625rem);
+  --text-h3--line-height: 1.08;
+  --text-h3--letter-spacing: -0.024em;
+  --text-h3--font-weight: 600;
+
+  --text-h4: clamp(1.0625rem, 1.15vw, 1.375rem);
+  --text-h4--line-height: 1.2;
+  --text-h4--letter-spacing: -0.016em;
+  --text-h4--font-weight: 600;
+
+  --text-lead: clamp(1.0625rem, 0.52vw + 0.7rem, 1.5rem);
+  --text-lead--line-height: 1.45;
+  --text-lead--letter-spacing: -0.012em;
+
+  --text-body: clamp(1rem, 0.34vw + 0.6rem, 1.1875rem);
+  --text-body--line-height: 1.62;
+
+  --text-small: clamp(0.875rem, 0.24vw + 0.6rem, 1.0625rem);
+  --text-small--line-height: 1.55;
+
+  --text-label: clamp(0.6875rem, 0.62vw, 0.8125rem);
+  --text-label--line-height: 1.2;
+  --text-label--letter-spacing: 0.22em;
+  --text-label--font-weight: 500;
+
+  --text-mega: clamp(3.5rem, 13vw, 17rem);
+  --text-mega--line-height: 0.84;
+  --text-mega--letter-spacing: -0.05em;
+  --text-mega--font-weight: 700;
+
+  /* Rhythm ------------------------------------------------------ */
+  --spacing-section: clamp(6rem, 11vw, 12.5rem);
+  --spacing-gutter: clamp(1.25rem, 3.4vw, 3.75rem);
+
+  --radius-none: 0px;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --background: #07070a;
+  --foreground: #f4f3f0;
+  --card: #101116;
+  --card-foreground: #f4f3f0;
+  --popover: #101116;
+  --popover-foreground: #f4f3f0;
+  --primary: #e2000a;
+  --primary-foreground: #ffffff;
+  --secondary: #16171d;
+  --secondary-foreground: #f4f3f0;
+  --muted: #14161c;
+  --muted-foreground: #a4a6ad;
+  --accent: #e2000a;
+  --accent-foreground: #ffffff;
+  --destructive: #e2000a;
+  --border: #1c1e25;
+  --input: #1c1e25;
+  --ring: #e2000a;
+
+  --site-max: 1800px;
+  --nav-h: 4.75rem;
+}
+
+.dark {
+  --background: #07070a;
+  --foreground: #f4f3f0;
+  --card: #101116;
+  --card-foreground: #f4f3f0;
+  --popover: #101116;
+  --popover-foreground: #f4f3f0;
+  --primary: #e2000a;
+  --primary-foreground: #ffffff;
+  --secondary: #16171d;
+  --secondary-foreground: #f4f3f0;
+  --muted: #14161c;
+  --muted-foreground: #a4a6ad;
+  --accent: #e2000a;
+  --accent-foreground: #ffffff;
+  --destructive: #e2000a;
+  --border: #1c1e25;
+  --input: #1c1e25;
+  --ring: #e2000a;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    border-color: var(--color-line);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: auto;
+  }
+
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-bone);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background-color: var(--color-red);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-red);
+    outline-offset: 3px;
+    border-radius: 1px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  [id] {
+    scroll-margin-top: calc(var(--nav-h) + 2rem);
+  }
+
+  /* Native scrollbar, tuned to the dark identity */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-ink);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #22242c;
+    border: 3px solid var(--color-ink);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #33363f;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ==========================================================================
+   Lenis smooth scroll
+   ========================================================================== */
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   Utilities
+   ========================================================================== */
+
+@utility shell {
+  width: 100%;
+  max-width: var(--site-max);
+  margin-inline: auto;
+  padding-inline: var(--spacing-gutter);
+}
+
+@utility label-xs {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  line-height: 1.2;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* Hairline that bleeds from edge to edge inside a padded shell */
+@utility rule-x {
+  position: relative;
+}
+@utility rule-t {
+  border-top: 1px solid var(--color-line);
+}
+
+@utility text-balance-none {
+  text-wrap: nowrap;
+}
+
+/* Masks used by the reveal primitives ---------------------------------- */
+@utility mask-line {
+  display: block;
+  overflow: hidden;
+  padding-top: 0.06em;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}
+
+@utility grid-lines {
+  --cols: 12;
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--color-line-soft) 0 1px,
+    transparent 1px calc(100% / var(--cols))
+  );
+}
+
+@media (max-width: 1023px) {
+  .grid-lines {
+    --cols: 6;
+  }
+}
+@media (max-width: 639px) {
+  .grid-lines {
+    --cols: 4;
+  }
+}
+
+@utility grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Watermark numerals. Drawn as a hairline outline with a transparent fill:
+   it reads as a technical drawing rather than a low-contrast fill, and it
+   keeps every text node on the page above the contrast threshold. */
+@utility watermark {
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.085);
+}
+
+/* ==========================================================================
+   Keyframes
+   ========================================================================== */
+
+@keyframes erstian-spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes erstian-spin-reverse {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes erstian-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -14px, 0);
+  }
+}
+
+@keyframes erstian-pulse {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes erstian-scan {
+  0% {
+    transform: translateY(-120%);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.9;
+  }
+  88% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(120%);
+    opacity: 0;
+  }
+}
+
+@keyframes erstian-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes erstian-blink {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  50%,
+  95% {
+    opacity: 0.15;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@utility animate-spin-slow {
+  animation: erstian-spin-slow 68s linear infinite;
+}
+@utility animate-spin-slower {
+  animation: erstian-spin-slow 120s linear infinite;
+}
+@utility animate-spin-reverse {
+  animation: erstian-spin-reverse 90s linear infinite;
+}
+@utility animate-float {
+  animation: erstian-float 9s ease-in-out infinite;
+}
+@utility animate-pulse-soft {
+  animation: erstian-pulse 6s ease-in-out infinite;
+}
+@utility animate-scan {
+  animation: erstian-scan 7s cubic-bezier(0.6, 0, 0.4, 1) infinite;
+}
+@utility animate-marquee {
+  animation: erstian-marquee 44s linear infinite;
+}
+@utility animate-blink {
+  animation: erstian-blink 2.4s ease-in-out infinite;
+}
+
+/* ==========================================================================
+   Motion preferences
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .mask-line {
+    overflow: visible;
+  }
 }
