@@ -4,7 +4,9 @@ import { GridLines, Section, SectionHeading, Shell } from "@/components/ui/secti
 import { SectionLabel } from "@/components/ui/section-label";
 import { BusinessVisual } from "@/components/visuals/business-visual";
 import { EverydayVisual } from "@/components/visuals/everyday-visual";
+import { MonochromeImage } from "@/components/visuals/monochrome-image";
 import { forBusiness, forEverydayUsers } from "@/lib/content";
+import { photos } from "@/lib/images";
 
 export function ForBusiness() {
   return (
@@ -51,7 +53,14 @@ export function ForBusiness() {
           </div>
 
           <MaskReveal className="lg:col-span-5 lg:col-start-8" delay={0.1}>
-            <BusinessVisual />
+            <div className="space-y-10">
+              <MonochromeImage
+                photo={photos.forBusiness}
+                ratio="3 / 2"
+                sizes="(max-width: 1023px) 100vw, 42vw"
+              />
+              <BusinessVisual />
+            </div>
           </MaskReveal>
         </div>
       </Shell>
@@ -69,7 +78,14 @@ export function ForEverydayUsers() {
       <Shell>
         <div className="grid grid-cols-1 items-center gap-x-14 gap-y-14 lg:grid-cols-12">
           <MaskReveal className="order-2 lg:order-1 lg:col-span-5" delay={0.1}>
-            <EverydayVisual />
+            <div className="space-y-10">
+              <MonochromeImage
+                photo={photos.forEverydayUsers}
+                ratio="3 / 2"
+                sizes="(max-width: 1023px) 100vw, 42vw"
+              />
+              <EverydayVisual />
+            </div>
           </MaskReveal>
 
           <div className="order-1 lg:order-2 lg:col-span-6 lg:col-start-7">

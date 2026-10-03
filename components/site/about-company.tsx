@@ -6,7 +6,9 @@ import { useRef } from "react";
 import { MaskedLines, Reveal } from "@/components/ui/reveal";
 import { Section, SectionHeading, Shell } from "@/components/ui/section";
 import { SectionLabel } from "@/components/ui/section-label";
+import { MonochromeImage } from "@/components/visuals/monochrome-image";
 import { company } from "@/lib/content";
+import { photos } from "@/lib/images";
 
 export function AboutCompany() {
   const ref = useRef<HTMLElement>(null);
@@ -55,6 +57,16 @@ export function AboutCompany() {
             </div>
           </div>
         </div>
+
+        {/* Plate ---------------------------------------------- */}
+        <Reveal className="mt-16 lg:mt-24" delay={0.1} distance={40}>
+          <MonochromeImage
+            photo={photos.company}
+            ratio="21 / 9"
+            sizes="100vw"
+            position="50% 45%"
+          />
+        </Reveal>
 
         {/* Emphasised line ------------------------------------------- */}
         <div className="relative mt-20 border-t border-line pt-12 lg:mt-28">

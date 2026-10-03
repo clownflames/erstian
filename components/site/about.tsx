@@ -6,7 +6,9 @@ import { useRef } from "react";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading, Section, Shell } from "@/components/ui/section";
 import { SectionLabel } from "@/components/ui/section-label";
+import { MonochromeImage } from "@/components/visuals/monochrome-image";
 import { about } from "@/lib/content";
+import { photos } from "@/lib/images";
 
 export function About() {
   const ref = useRef<HTMLElement>(null);
@@ -75,6 +77,16 @@ export function About() {
             </Reveal>
           </div>
         </div>
+
+        {/* Atmospheric plate ----------------------------------------- */}
+        <Reveal className="mt-16 lg:mt-24" delay={0.1} distance={40}>
+          <MonochromeImage
+            photo={photos.about}
+            ratio="21 / 9"
+            sizes="100vw"
+            position="50% 55%"
+          />
+        </Reveal>
 
         {/* Closing band ---------------------------------------------- */}
         <div className="mt-20 border-t border-line pt-10 lg:mt-28">

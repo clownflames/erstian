@@ -1,8 +1,9 @@
 import { Reveal } from "@/components/ui/reveal";
 import { Section, SectionHeading, Shell } from "@/components/ui/section";
 import { SectionLabel } from "@/components/ui/section-label";
-import { CardGlyph } from "@/components/visuals/card-glyph";
+import { MonochromeImage } from "@/components/visuals/monochrome-image";
 import { whatWeBuild } from "@/lib/content";
+import { categoryPhotos } from "@/lib/images";
 
 export function WhatWeBuild() {
   return (
@@ -86,11 +87,14 @@ export function WhatWeBuild() {
                     {item.body}
                   </p>
 
-                  {/* Glyph + affordance */}
+                  {/* Plate + affordance */}
                   <div className="flex items-center justify-between gap-6 md:col-span-3 md:justify-end">
-                    <div className="h-[86px] w-[112px] opacity-45 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:w-[136px] group-hover:opacity-100 group-focus-visible:w-[136px] group-focus-visible:opacity-100">
-                      <CardGlyph variant={i as 0 | 1 | 2 | 3} />
-                    </div>
+                    <MonochromeImage
+                      photo={categoryPhotos[i] ?? categoryPhotos[0]}
+                      ratio="3 / 2"
+                      sizes="(max-width: 767px) 45vw, 136px"
+                      className="w-[112px] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:w-[136px] group-focus-visible:w-[136px]"
+                    />
                     <span
                       aria-hidden
                       className="relative flex size-11 shrink-0 items-center justify-center border border-line text-bone transition-colors duration-500 group-hover:border-red group-hover:text-red"
