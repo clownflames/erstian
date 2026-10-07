@@ -1,16 +1,21 @@
 import Link from "next/link";
 
+import { SmoothScrollProvider } from "@/components/providers/smooth-scroll";
+import { SiteHeader } from "@/components/site/site-header";
 import { Shell } from "@/components/ui/section";
-import { SubpageHeader } from "@/components/site/subpage-nav";
-import { brand } from "@/lib/content";
+import { brand, copyrightLine } from "@/lib/content";
 
 /**
  * Shared chrome for the standalone marketing pages.
  *
- * Server components apart from `SubpageHeader`. The legal pages get a bespoke
- * shell because a document needs a contents rail and native anchor scrolling;
- * these pages are editorial, so they get the lighter treatment here — a
- * route-aware bar, a masthead with a support-copy slot, and a footer.
+ * The same `SiteHeader` the home page uses, so there is one header in the app
+ * rather than two that can drift. The legal pages keep a bespoke shell: a
+ * document needs a contents rail and native anchor scrolling, which the
+ * Lenis-driven header would interfere with.
+ *
+ * `SmoothScrollProvider` is here rather than in the root layout because the
+ * legal pages deliberately have no client dependencies at all — legal copy that
+ * depends on hydration is copy a crawler may never see.
  */
 
 /**
@@ -20,30 +25,28 @@ import { brand } from "@/lib/content";
  * structurally identical: the only thing that varies between /about and
  * /contact is the copy in lib/pages.ts.
  */
-export function Subpage({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
+export function Subpage({ children }: { children: React.ReactNode }) {
   return (
-    <div className="relative flex min-h-svh flex-col">
-      <a
-        href="#main"
-        className="label-xs sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-110 focus:bg-bone focus:px-5 focus:py-3 focus:text-ink"
-      >
-        Skip to content
-      </a>
+    <SmoothScrollProvider>
+      <div className="relative flex min-h-svh flex-col">
+        <a
+          href="#main"
+          className="label-xs sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-110 focus:bg-bone focus:px-5 focus:py-3 focus:text-ink"
+        >
+          Skip to content
+        </a>
 
-      <SubpageHeader title={title} />
+        {/* The header is fixed, so `main` carries the offset that clears it —
+            the masthead's own top padding then stacks on top of that. */}
+        <SiteHeader />
 
-      <main id="main" className="flex-1">
-        {children}
-      </main>
+        <main id="main" className="flex-1 pt-[var(--nav-h)]">
+          {children}
+        </main>
 
-      <PageFooter />
-    </div>
+        <PageFooter />
+      </div>
+    </SmoothScrollProvider>
   );
 }
 
@@ -158,7 +161,10 @@ export function PageSection({
     <section
       id={id}
       aria-labelledby={accessibleName && headingId ? headingId : undefined}
-      className="scroll-mt-32 border-t border-line pt-10"
+      // Clears the fixed header. globals.css sets a global scroll-margin for
+      // every [id]; this wins for these sections because it is more specific
+      // and the value differs from the document pages' shorter bar.
+      className="scroll-mt-[calc(var(--nav-h)+2rem)] border-t border-line pt-10"
     >
       <div className="grid grid-cols-1 gap-x-12 gap-y-8 lg:grid-cols-12">
         <div className="lg:col-span-4">
@@ -385,22 +391,29 @@ export function PageClosing({
   );
 }
 
-/** Minimal footer shared by the subpages. */
+/**
+ * Footer shared by the subpages.
+ *
+ * The home page gets the full `SiteFooter`; this is the short version for the
+ * editorial pages, where a four-column sitemap under a giant wordmark would
+ * push the closing band a screen below the fold.
+ */
 export function PageFooter() {
   return (
     <footer className="border-t border-line">
       <div className="shell py-10">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-          <p className="label-xs text-fog">
-            © {new Date().getFullYear()} {brand.legalName}. All rights reserved.
-          </p>
+          <p className="label-xs text-fog">{copyrightLine()}</p>
 
-          <nav aria-label="Pages" className="flex flex-wrap items-center gap-x-6 gap-y-3">
+          <nav
+            aria-label="Footer"
+            className="flex flex-wrap items-center gap-x-6 gap-y-3"
+          >
             <Link
               href="/legal"
               className="label-xs text-bone-dim transition-colors duration-400 hover:text-signal"
             >
-              Legal
+              Legal documents
             </Link>
             <a
               href={`mailto:${brand.email}`}

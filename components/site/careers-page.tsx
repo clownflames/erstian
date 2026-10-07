@@ -13,7 +13,7 @@ import { careersPage } from "@/lib/pages";
 /** /careers — no open roles, and everything that implies. */
 export function CareersPage() {
   return (
-    <Subpage title="Careers">
+    <Subpage>
       <PageMasthead
         label={careersPage.label}
         heading={careersPage.heading}

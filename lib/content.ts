@@ -16,12 +16,23 @@ export const brand = {
   url: "https://erstian.com",
 } as const;
 
+/**
+ * Primary navigation.
+ *
+ * Every entry is a real route, which means one header works from every page and
+ * the nav never depends on which page you are already on. The home page's
+ * in-page sections (#solutions, #approach, #what-we-build and the rest) are
+ * reachable from the footer, the hero CTAs and the scroll rail — a one-page
+ * site whose header only works on the home page is worse than one that works
+ * everywhere.
+ */
 export const navLinks = [
-  { label: "About", href: "#about" },
-  { label: "Products", href: "#products" },
-  { label: "Solutions", href: "#solutions" },
-  { label: "Approach", href: "#approach" },
-  { label: "Contact", href: "#contact" },
+  { label: "About", href: "/about" },
+  { label: "Products", href: "/products" },
+  { label: "Updates", href: "/updates" },
+  { label: "Careers", href: "/careers" },
+  { label: "FAQ", href: "/faq" },
+  { label: "Contact", href: "/contact" },
 ] as const;
 
 export const hero = {
@@ -115,7 +126,7 @@ export const products = {
   heading: ["Something new is", "being built."],
   body: "Erstian is currently building its first generation of software products.",
   note: "Our product ecosystem will grow over time across different categories and use cases.",
-  cta: { label: "Stay Updated", href: "#contact" },
+  cta: { label: "Stay Updated", href: "/updates" },
 } as const;
 
 export const forBusiness = {
@@ -127,7 +138,7 @@ export const forBusiness = {
     "We aim to build focused tools that solve specific business problems without unnecessary complexity.",
     "From everyday operations to productivity and workflow management, Erstian's products are designed with practical business use in mind.",
   ],
-  cta: { label: "Business Solutions — Coming Soon", href: "#contact" },
+  cta: { label: "Business Solutions — Coming Soon", href: "/products" },
 } as const;
 
 export const forEverydayUsers = {
@@ -139,7 +150,7 @@ export const forEverydayUsers = {
     "Some problems are simply everyday problems.",
     "We build accessible tools that help individuals complete tasks, solve problems and make better use of their time.",
   ],
-  cta: { label: "Explore Consumer Products — Coming Soon", href: "#contact" },
+  cta: { label: "Explore Consumer Products — Coming Soon", href: "/products" },
 } as const;
 
 export const whyErstian = {
@@ -201,8 +212,8 @@ export const comingSoon = {
   heading: ["Something useful", "is coming."],
   body: "We're just getting started.",
   note: "Follow Erstian as we build software designed for the way people and businesses work today.",
-  primaryCta: { label: "Stay Updated", href: "#contact" },
-  secondaryCta: { label: "Contact Us", href: "#contact" },
+  primaryCta: { label: "See What's Coming", href: "/products" },
+  secondaryCta: { label: "Follow Our Progress", href: "/updates" },
 } as const;
 
 export const contact = {
@@ -210,7 +221,8 @@ export const contact = {
   label: "Contact",
   heading: ["Have an idea or want", "to work with us?"],
   body: "Whether you're interested in our upcoming products, have a business requirement, want to explore a partnership or simply want to connect — we'd like to hear from you.",
-  cta: { label: "Get in Touch", href: `mailto:${brand.email}` },
+  cta: { label: "Get in Touch", href: "/contact" },
+  /** Kept short on the home page; /contact carries the full channel list. */
   channels: [
     { label: "General", value: brand.email, href: `mailto:${brand.email}` },
     {
@@ -256,6 +268,12 @@ export const faqs = [
 
 export const footer = {
   tagline: brand.tagline,
+  /**
+   * The same route/section distinction as `navLinks`: `#hash` entries are
+   * home-page sections and only meaningful there, everything else is a real
+   * page. `SiteFooter` routes the hashes through Lenis and lets the routes
+   * navigate normally, so one list can hold both.
+   */
   columns: [
     {
       title: "Company",
@@ -297,11 +315,26 @@ export const footer = {
       ],
     },
   ],
-  social: [
-    { label: "Instagram", href: "https://www.instagram.com/" },
-    { label: "LinkedIn", href: "https://www.linkedin.com/" },
-    { label: "X", href: "https://x.com/" },
-    { label: "YouTube", href: "https://www.youtube.com/" },
-  ],
-  legal: "© 2026 Erstian. All rights reserved.",
+  /**
+   * Deliberately empty.
+   *
+   * These used to point at each platform's home page, which is worse than no
+   * link at all: it looks like an Erstian profile in the footer and sends a
+   * visitor to Instagram's homepage. Add real profile URLs here when the
+   * accounts exist — `organizationJsonLd()` in lib/seo.ts picks these up as
+   * `sameAs` at the same time, which is the point of keeping them in one list.
+   */
+  social: [] as readonly { label: string; href: string }[],
 } as const;
+
+/**
+ * Footer copyright line.
+ *
+ * A function rather than a string so the year cannot go stale — a hardcoded
+ * "© 2026" still reads correctly in December and quietly becomes wrong on 1
+ * January. Computed at render, on the server, so the footer HTML always matches
+ * the year it was served.
+ */
+export function copyrightLine(): string {
+  return `© ${new Date().getFullYear()} ${brand.legalName}. All rights reserved.`;
+}

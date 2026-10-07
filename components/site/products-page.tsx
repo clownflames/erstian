@@ -12,7 +12,7 @@ import { productsPage } from "@/lib/pages";
 /** /products — the categories being built, and the standards they share. */
 export function ProductsPage() {
   return (
-    <Subpage title="Products">
+    <Subpage>
       <PageMasthead
         label={productsPage.label}
         heading={productsPage.heading}

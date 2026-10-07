@@ -10,7 +10,7 @@
  * of operation.
  */
 
-import { brand } from "@/lib/content";
+import { brand, navLinks } from "@/lib/content";
 
 /**
  * Every standalone marketing page, in navigation order.
@@ -18,6 +18,16 @@ import { brand } from "@/lib/content";
  * `changeFrequency` and `priority` live here rather than in app/sitemap.ts so
  * the route, its copy and its crawl hints are declared in one place — adding a
  * page means adding one entry, not editing two files that can drift apart.
+ */
+/**
+ * Every standalone marketing page, in navigation order.
+ *
+ * `changeFrequency` and `priority` live here rather than in app/sitemap.ts so
+ * the route, its copy and its crawl hints are declared in one place — adding a
+ * page means adding one entry, not editing two files that can drift apart.
+ *
+ * This list drives page metadata and the sitemap. `navLinks` in lib/content.ts
+ * drives the header; the two must agree, which is checked at module load below.
  */
 export const subpages = [
   {
@@ -83,6 +93,38 @@ export const subpages = [
 ] as const;
 
 export type SubpageSlug = (typeof subpages)[number]["slug"];
+
+/**
+ * Every marketing page must be reachable from the header.
+ *
+ * `navLinks` (lib/content.ts) drives the primary navigation and `subpages` above
+ * drives metadata and the sitemap. Nothing links them together, so a page
+ * added to one list and not the other builds cleanly and then goes live with no
+ * route into it — invisible to crawlers and unreachable from the site itself.
+ * `/legal` is the deliberate exception: it is reached from the footer, not the
+ * primary nav, because it is a document index rather than a page about Erstian.
+ */
+const NAV_EXEMPT = new Set(["/legal"]);
+
+for (const page of subpages) {
+  if (NAV_EXEMPT.has(page.href)) continue;
+
+  if (!navLinks.some((link) => link.href === page.href)) {
+    throw new Error(
+      `lib/pages.ts: "${page.href}" is not in navLinks. Add it to the primary ` +
+        "navigation or the page is unreachable.",
+    );
+  }
+}
+
+for (const link of navLinks) {
+  if (!subpages.some((page) => page.href === link.href)) {
+    throw new Error(
+      `lib/content.ts: navLinks points at "${link.href}", which has no entry ` +
+        "in subpages. Add the page or remove the link.",
+    );
+  }
+}
 
 /* --- /about ---------------------------------------------------------------- */
 

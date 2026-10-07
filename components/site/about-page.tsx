@@ -11,7 +11,7 @@ import { aboutPage } from "@/lib/pages";
 /** /about — who Erstian is and how it works. */
 export function AboutPage() {
   return (
-    <Subpage title="About">
+    <Subpage>
       <PageMasthead
         label={aboutPage.label}
         heading={aboutPage.heading}

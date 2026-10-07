@@ -55,6 +55,47 @@ export function required(value: string, label: string): string {
   return value.trim() || `[${label} — TO BE CONFIRMED]`;
 }
 
+/**
+ * Facts that must be filled in before this site can ship.
+ *
+ * Checked once at module load rather than left to the `required()` marker alone.
+ * The marker is a good tripwire for a human reading the rendered page, but it
+ * does nothing for CI: a build with an empty governing-law field passes today and
+ * ships a Terms page with a bracketed placeholder in a binding clause. Throwing
+ * here turns that into a failed build.
+ *
+ * To ship before you have these, the escape hatch is explicit and loud — set
+ * `ALLOW_INCOMPLETE_LEGAL_ENTITY=1` in the build environment. Do not set it in
+ * `.env` for a production deploy.
+ */
+const REQUIRED_FIELDS = [
+  "registrationNumber",
+  "registeredAddress",
+  "governingLaw",
+  "exclusiveCourts",
+] as const satisfies readonly (keyof typeof legalEntity)[];
+
+if (process.env.ALLOW_INCOMPLETE_LEGAL_ENTITY !== "1") {
+  const missing = REQUIRED_FIELDS.filter((field) => !legalEntity[field].trim());
+
+  if (missing.length > 0) {
+    throw new Error(
+      [
+        "",
+        "lib/legal/entity.ts is incomplete — refusing to build.",
+        "",
+        `  Missing: ${missing.join(", ")}`,
+        "",
+        "  These are facts only the site owner can supply. Fill them in at the",
+        "  top of lib/legal/entity.ts, or set ALLOW_INCOMPLETE_LEGAL_ENTITY=1 to",
+        "  build anyway. The second option ships documents with visible",
+        "  \"TO BE CONFIRMED\" markers in binding clauses.",
+        "",
+      ].join("\n"),
+    );
+  }
+}
+
 /** Optional facts (registration number, address) are omitted when unset. */
 export function optional(value: string): string | null {
   return value.trim() || null;

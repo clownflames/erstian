@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import { Logo } from "@/components/ui/logo";
 import { useSmoothScroll } from "@/components/providers/smooth-scroll";
-import { brand, footer } from "@/lib/content";
+import { brand, copyrightLine, footer } from "@/lib/content";
 import { EASE } from "@/lib/motion";
 
 export function SiteFooter() {
@@ -22,8 +22,6 @@ export function SiteFooter() {
     event.preventDefault();
     scrollTo(target, 0);
   };
-
-  const year = 2026;
 
   return (
     <footer className="relative overflow-hidden border-t border-line bg-ink">
@@ -66,59 +64,70 @@ export function SiteFooter() {
         </div>
       </div>
 
-      {/* Social ------------------------------------------------------- */}
-      <div className="shell mt-16 lg:mt-24">
-        <div className="flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-line pt-8">
-          <span className="label-xs text-fog">Elsewhere</span>
-          <ul className="flex flex-wrap items-center gap-x-7 gap-y-3">
-            {footer.social.map((item, i) => (
-              <motion.li
-                key={item.label}
-                initial={reduced ? undefined : { opacity: 0, y: 10 }}
-                whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.6 }}
-                transition={{ duration: 0.7, ease: EASE, delay: i * 0.05 }}
-              >
-                <a
-                  href={item.href}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="group flex items-center gap-2 text-small text-bone-dim transition-colors duration-400 hover:text-bone"
-                >
-                  {item.label}
-                  <svg
-                    aria-hidden
-                    width="12"
-                    height="12"
-                    viewBox="0 0 12 12"
-                    fill="none"
-                    className="text-fog transition-all duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-signal"
-                  >
-                    <path
-                      d="M3 9 9 3M9 3H4.5M9 3v4.5"
-                      stroke="currentColor"
-                      strokeWidth="1.2"
-                    />
-                  </svg>
-                </a>
-              </motion.li>
-            ))}
-          </ul>
+      {/* Elsewhere ----------------------------------------------------
+          Renders nothing while `footer.social` is empty. An empty row labelled
+          "Elsewhere" would be a dead end, so the whole band is conditional
+          rather than just the list. */}
+      {footer.social.length > 0 ? (
+        <div className="shell mt-16 lg:mt-24">
+          <div className="flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-line pt-8">
+            <span className="label-xs text-fog">Elsewhere</span>
 
-          <a
-            href={`mailto:${brand.email}`}
-            className="label-xs ml-auto text-bone transition-colors duration-400 hover:text-signal"
-          >
-            {brand.email}
-          </a>
+            <ul className="flex flex-wrap items-center gap-x-7 gap-y-3">
+              {footer.social.map((item, i) => (
+                <motion.li
+                  key={item.label}
+                  initial={reduced ? undefined : { opacity: 0, y: 10 }}
+                  whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.6 }}
+                  transition={{ duration: 0.7, ease: EASE, delay: i * 0.05 }}
+                >
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="group flex items-center gap-2 text-small text-bone-dim transition-colors duration-400 hover:text-bone"
+                  >
+                    {item.label}
+                    <svg
+                      aria-hidden
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      className="text-fog transition-all duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-signal"
+                    >
+                      <path
+                        d="M3 9 9 3M9 3H4.5M9 3v4.5"
+                        stroke="currentColor"
+                        strokeWidth="1.2"
+                      />
+                    </svg>
+                  </a>
+                </motion.li>
+              ))}
+            </ul>
+
+            <a
+              href={`mailto:${brand.email}`}
+              className="label-xs ml-auto text-bone transition-colors duration-400 hover:text-signal"
+            >
+              {brand.email}
+            </a>
+          </div>
         </div>
-      </div>
+      ) : null}
 
       {/* Bottom bar --------------------------------------------------- */}
       <div className="shell mt-14 pb-10 lg:mt-20">
         <div className="flex flex-col gap-4 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between">
-          <p className="label-xs text-fog">{footer.legal}</p>
-          <p className="label-xs text-fog">Built from the ground up · {year}</p>
+          <p className="label-xs text-fog">{copyrightLine()}</p>
+          <Link
+            href="/legal"
+            className="label-xs text-fog transition-colors duration-400 hover:text-signal"
+          >
+            Legal documents
+          </Link>
         </div>
       </div>
 

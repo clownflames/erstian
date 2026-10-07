@@ -19,7 +19,7 @@ export function FaqPage() {
   const total = faqPage.groups.reduce((n, group) => n + group.items.length, 0);
 
   return (
-    <Subpage title="FAQ">
+    <Subpage>
       <PageMasthead
         label={faqPage.label}
         heading={faqPage.heading}

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import Link from "next/link";
 import { useId, useState } from "react";
 
 import { MaskedLines, Reveal } from "@/components/ui/reveal";
@@ -35,6 +36,24 @@ export function Faq() {
                 If something isn&rsquo;t covered here, write to us directly —
                 we read everything.
               </p>
+            </Reveal>
+
+            {/* The short list above is a sample. /faq carries the full set,
+                grouped by subject, and is where the FAQPage structured data
+                for this route points. */}
+            <Reveal delay={0.18}>
+              <Link
+                href="/faq"
+                className="label-xs mt-6 inline-flex items-center gap-2 text-bone transition-colors duration-400 hover:text-signal"
+              >
+                Read all questions
+                <span
+                  aria-hidden
+                  className="transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1"
+                >
+                  →
+                </span>
+              </Link>
             </Reveal>
           </div>
 

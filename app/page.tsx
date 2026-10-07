@@ -41,7 +41,7 @@ export default function Home() {
           Skip to content
         </a>
 
-        <SiteHeader />
+        <SiteHeader showProgress />
 
         <main id="main">
           <Hero />

@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { Logo } from "@/components/ui/logo";
 import { Shell } from "@/components/ui/section";
-import { brand } from "@/lib/content";
+import { brand, copyrightLine } from "@/lib/content";
 import { relatedDocs, type LegalBlock, type LegalDoc } from "@/lib/legal";
 
 /**
@@ -315,9 +315,7 @@ export function LegalPage({ doc }: { doc: LegalDoc }) {
       {/* Footer --------------------------------------------------------- */}
       <footer className="border-t border-line">
         <div className="shell flex flex-col gap-4 py-10 sm:flex-row sm:items-center sm:justify-between">
-          <p className="label-xs text-fog">
-            © {new Date().getFullYear()} {brand.legalName}. All rights reserved.
-          </p>
+          <p className="label-xs text-fog">{copyrightLine()}</p>
           <a
             href={`mailto:${brand.email}`}
             className="label-xs text-bone-dim transition-colors duration-400 hover:text-signal"

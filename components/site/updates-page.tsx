@@ -30,7 +30,7 @@ const STATE_TONE: Record<string, string> = {
 /** /updates — a build log rather than a press page. */
 export function UpdatesPage() {
   return (
-    <Subpage title="Updates">
+    <Subpage>
       <PageMasthead
         label={updatesPage.label}
         heading={updatesPage.heading}

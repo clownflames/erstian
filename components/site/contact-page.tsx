@@ -14,7 +14,7 @@ import { contactPage } from "@/lib/pages";
 /** /contact — channels, what happens after you write, and how to be useful. */
 export function ContactPage() {
   return (
-    <Subpage title="Contact">
+    <Subpage>
       <PageMasthead
         label={contactPage.label}
         heading={contactPage.heading}
