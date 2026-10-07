@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import Link from "next/link";
 
 import { Logo } from "@/components/ui/logo";
 import { useSmoothScroll } from "@/components/providers/smooth-scroll";
@@ -47,14 +48,14 @@ export function SiteFooter() {
                   <ul className="mt-5 space-y-3">
                     {column.links.map((link) => (
                       <li key={link.label}>
-                        <a
+                        <Link
                           href={link.href}
                           onClick={(e) => handleAnchor(e, link.href)}
                           className="group relative inline-flex text-small text-bone-dim transition-colors duration-400 hover:text-bone"
                         >
                           {link.label}
                           <span className="absolute -bottom-0.5 left-0 h-px w-full origin-right scale-x-0 bg-red transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:origin-left group-hover:scale-x-100" />
-                        </a>
+                        </Link>
                       </li>
                     ))}
                   </ul>

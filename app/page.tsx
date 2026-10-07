@@ -1,5 +1,8 @@
+import type { Metadata } from "next";
+
 import { SiteIntroProvider } from "@/components/providers/site-intro";
 import { SmoothScrollProvider } from "@/components/providers/smooth-scroll";
+import { JsonLd } from "@/components/seo/json-ld";
 import { About } from "@/components/site/about";
 import { AboutCompany } from "@/components/site/about-company";
 import { Approach } from "@/components/site/approach";
@@ -14,6 +17,18 @@ import { ForBusiness, ForEverydayUsers } from "@/components/site/solutions";
 import { Vision } from "@/components/site/vision";
 import { WhatWeBuild } from "@/components/site/what-we-build";
 import { WhyErstian } from "@/components/site/why-erstian";
+import { DESCRIPTION, TITLE, absoluteUrl, faqPageJsonLd } from "@/lib/seo";
+
+/**
+ * The root layout deliberately declares no canonical, so the home page states
+ * its own. `absolute` keeps the default title from picking up the
+ * "%s — Erstian" template, which would render "… — Erstian — Erstian".
+ */
+export const metadata: Metadata = {
+  title: { absolute: TITLE },
+  description: DESCRIPTION,
+  alternates: { canonical: absoluteUrl("/") },
+};
 
 export default function Home() {
   return (
@@ -46,6 +61,8 @@ export default function Home() {
 
         <SiteFooter />
       </SiteIntroProvider>
+      {/* FAQPage markup belongs to this route only — see faqPageJsonLd(). */}
+      <JsonLd data={faqPageJsonLd()} />
     </SmoothScrollProvider>
   );
 }

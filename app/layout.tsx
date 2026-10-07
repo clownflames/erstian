@@ -2,7 +2,9 @@ import type { Metadata, Viewport } from "next";
 import { Geist_Mono, Inter, Inter_Tight } from "next/font/google";
 
 import "./globals.css";
+import { JsonLd } from "@/components/seo/json-ld";
 import { brand } from "@/lib/content";
+import { DESCRIPTION, TITLE, siteJsonLd } from "@/lib/seo";
 
 const display = Inter_Tight({
   subsets: ["latin"],
@@ -25,15 +27,55 @@ const mono = Geist_Mono({
   weight: ["400", "500"],
 });
 
-const TITLE = "Erstian — Software That Solves Everyday Problems";
-const DESCRIPTION =
-  "Erstian builds practical software for businesses and everyday users — from productivity tools and business solutions to useful digital products for everyday life.";
+const TITLE_TEMPLATE = "%s — Erstian";
+
+/**
+ * Search Console / Bing / Pinterest / Facebook ownership verification.
+ *
+ * Each token is optional and read from the environment, so an unconfigured
+ * provider emits no markup at all rather than an empty `<meta>` tag. Next maps
+ * `google`, `yandex` and `me` to their own meta names; everything else goes
+ * through `other` keyed by the exact meta name.
+ */
+const verification: Metadata["verification"] = (() => {
+  const other: NonNullable<
+    NonNullable<Metadata["verification"]>["other"]
+  > = {};
+
+  if (process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION) {
+    other["msvalidate.01"] = process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION;
+  }
+  if (process.env.NEXT_PUBLIC_PINTEREST_SITE_VERIFICATION) {
+    other["p:domain_verify"] = process.env.NEXT_PUBLIC_PINTEREST_SITE_VERIFICATION;
+  }
+  if (process.env.NEXT_PUBLIC_FACEBOOK_DOMAIN_VERIFICATION) {
+    other["facebook-domain-verification"] =
+      process.env.NEXT_PUBLIC_FACEBOOK_DOMAIN_VERIFICATION;
+  }
+  if (process.env.NEXT_PUBLIC_TIKTOK_SITE_VERIFICATION) {
+    other["tiktok-developers-site-verification"] =
+      process.env.NEXT_PUBLIC_TIKTOK_SITE_VERIFICATION;
+  }
+
+  return {
+    ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION && {
+      google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+    }),
+    ...(process.env.NEXT_PUBLIC_YANDEX_SITE_VERIFICATION && {
+      yandex: process.env.NEXT_PUBLIC_YANDEX_SITE_VERIFICATION,
+    }),
+    ...(process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION && {
+      me: process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION,
+    }),
+    ...(Object.keys(other).length > 0 && { other }),
+  };
+})();
 
 export const metadata: Metadata = {
   metadataBase: new URL(brand.url),
   title: {
     default: TITLE,
-    template: "%s — Erstian",
+    template: TITLE_TEMPLATE,
   },
   description: DESCRIPTION,
   applicationName: brand.name,
@@ -49,7 +91,10 @@ export const metadata: Metadata = {
   creator: brand.name,
   publisher: brand.name,
   category: "technology",
-  alternates: { canonical: "/" },
+  // No `alternates.canonical` here. A canonical set at the root layout is
+  // inherited by every child route, which would declare all of them duplicates
+  // of the home page. Each route sets its own via `pageMetadata()` in lib/seo.
+  manifest: "/manifest.webmanifest",
   openGraph: {
     type: "website",
     url: brand.url,
@@ -78,6 +123,7 @@ export const metadata: Metadata = {
     googleBot: { index: true, follow: true, "max-image-preview": "large" },
   },
   formatDetection: { telephone: false },
+  ...(Object.keys(verification).length > 0 ? { verification } : {}),
 };
 
 export const viewport: Viewport = {
@@ -97,6 +143,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full bg-ink font-sans text-bone antialiased">
+        <JsonLd data={siteJsonLd()} />
         {children}
       </body>
     </html>

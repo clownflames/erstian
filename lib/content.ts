@@ -260,16 +260,17 @@ export const footer = {
     {
       title: "Company",
       links: [
-        { label: "About", href: "#company" },
-        { label: "Products", href: "#products" },
-        { label: "Approach", href: "#approach" },
-        { label: "Careers", href: "#contact" },
-        { label: "Contact", href: "#contact" },
+        { label: "About", href: "/about" },
+        { label: "Our approach", href: "#approach" },
+        { label: "Careers", href: "/careers" },
+        { label: "Updates", href: "/updates" },
+        { label: "Contact", href: "/contact" },
       ],
     },
     {
       title: "Products",
       links: [
+        { label: "Overview", href: "/products" },
         { label: "Business Software", href: "#solutions" },
         { label: "Productivity", href: "#what-we-build" },
         { label: "Utilities", href: "#what-we-build" },
@@ -279,18 +280,20 @@ export const footer = {
     {
       title: "Support",
       links: [
-        { label: "Help Center", href: "#faq" },
-        { label: "Contact", href: "#contact" },
-        { label: "FAQs", href: "#faq" },
+        { label: "FAQ", href: "/faq" },
+        { label: "Contact us", href: "/contact" },
+        { label: "Security", href: "/security" },
+        { label: "Accessibility", href: "/accessibility" },
       ],
     },
     {
       title: "Legal",
       links: [
-        { label: "Privacy Policy", href: "#" },
-        { label: "Terms & Conditions", href: "#" },
-        { label: "Refund Policy", href: "#" },
-        { label: "Cookie Policy", href: "#" },
+        { label: "All documents", href: "/legal" },
+        { label: "Privacy Policy", href: "/privacy" },
+        { label: "Terms & Conditions", href: "/terms" },
+        { label: "Refund Policy", href: "/refunds" },
+        { label: "Cookie Policy", href: "/cookies" },
       ],
     },
   ],

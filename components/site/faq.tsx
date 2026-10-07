@@ -1,12 +1,12 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useId, useState } from "react";
 
 import { MaskedLines, Reveal } from "@/components/ui/reveal";
 import { Section, Shell } from "@/components/ui/section";
 import { faqs } from "@/lib/content";
-import { EASE } from "@/lib/motion";
+import { DURATION, EASE } from "@/lib/motion";
 
 export function Faq() {
   const [open, setOpen] = useState<number | null>(0);
@@ -101,28 +101,36 @@ export function Faq() {
                       </button>
                     </h3>
 
-                    <AnimatePresence initial={false}>
-                      {isOpen ? (
-                        <motion.div
-                          key="panel"
-                          id={panelId}
-                          role="region"
-                          aria-labelledby={buttonId}
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{
-                            duration: reduced ? 0 : 0.55,
-                            ease: EASE,
-                          }}
-                          className="overflow-hidden"
-                        >
-                          <p className="max-w-[58ch] pb-8 text-body text-fog sm:pl-[calc(0.625rem+2.5rem)] lg:pb-10">
-                            {item.answer}
-                          </p>
-                        </motion.div>
-                      ) : null}
-                    </AnimatePresence>
+                    {/* The panel is always mounted and animates between height
+                        0 and auto rather than being unmounted by AnimatePresence.
+                        Every answer is therefore present in the server HTML,
+                        which is what the FAQPage structured data in lib/seo.ts
+                        describes — schema that points at text absent from the
+                        page is a manual-action risk with Google. Collapsed
+                        content stays reachable by keyboard and screen reader
+                        too, rather than being trapped behind a click.
+
+                        Height animates via `grid-template-rows: 0fr → 1fr`
+                        rather than a measured pixel height, so the panel
+                        collapses without framer-motion ever resolving `auto`
+                        and without a resize observer. */}
+                    <div
+                      id={panelId}
+                      role="region"
+                      aria-labelledby={buttonId}
+                      className="grid transition-[grid-template-rows,opacity] ease-[cubic-bezier(0.16,1,0.3,1)]"
+                      style={{
+                        gridTemplateRows: isOpen ? "1fr" : "0fr",
+                        opacity: isOpen ? 1 : 0,
+                        transitionDuration: reduced ? "0ms" : `${DURATION.fast}s`,
+                      }}
+                    >
+                      <div className="min-h-0 overflow-hidden">
+                        <p className="max-w-[58ch] pb-8 text-body text-fog sm:pl-[calc(0.625rem+2.5rem)] lg:pb-10">
+                          {item.answer}
+                        </p>
+                      </div>
+                    </div>
                   </Reveal>
                 );
               })}
