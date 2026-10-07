@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 
-import { brand, faqs } from "@/lib/content";
+import { brand, faqs, footer, internbird } from "@/lib/content";
+
+/** Real social profiles, currently none. See `organizationJsonLd`. */
+const SOCIAL_PROFILES = footer.social.map((item) => item.href);
 
 /**
  * Single source of truth for the site's search-facing strings and structured
@@ -10,8 +13,15 @@ import { brand, faqs } from "@/lib/content";
 
 export const TITLE = "Erstian — Software That Solves Everyday Problems";
 
+/**
+ * Homepage description.
+ *
+ * Leads with Internbird because it is the live, purchasable offering. A
+ * description that lists only in-development software sends the wrong signal to
+ * both people and crawlers about what Erstian actually is today.
+ */
 export const DESCRIPTION =
-  "Erstian builds practical software for businesses and everyday users — from productivity tools and business solutions to useful digital products for everyday life.";
+  "Erstian develops and operates practical software for students, businesses and everyday users — including Internbird, a platform for discovering internships, training programs and career opportunities.";
 
 /** Absolute URL for a site-relative path. Drives every canonical and og:url. */
 export function absoluteUrl(path: string): string {
@@ -31,6 +41,15 @@ type PageMetadataInput = {
   description: string;
   /** Site-relative path, e.g. "/privacy". Also becomes the canonical URL. */
   path: string;
+  /**
+   * Route-specific keywords.
+   *
+   * Merged with the site-wide list from the root layout rather than replacing
+   * it, so a page can add terms without dropping Erstian's. Kept off the legal
+   * documents deliberately — keyword-stuffing a privacy policy is both
+   * ineffective and a bad signal.
+   */
+  keywords?: readonly string[];
 };
 
 /**
@@ -44,6 +63,7 @@ export function pageMetadata({
   title,
   description,
   path,
+  keywords,
 }: PageMetadataInput): Metadata {
   const url = absoluteUrl(path);
   const fullTitle = `${title} — ${brand.name}`;
@@ -51,6 +71,7 @@ export function pageMetadata({
   return {
     title,
     description,
+    ...(keywords && keywords.length > 0 ? { keywords: [...keywords] } : {}),
     alternates: { canonical: url },
     openGraph: {
       type: "website",
@@ -114,17 +135,48 @@ export function organizationJsonLd() {
       },
       {
         "@type": "ContactPoint",
+        contactType: "billing and refunds",
+        email: brand.businessEmail,
+        url: brand.url,
+        availableLanguage: ["English"],
+      },
+      {
+        "@type": "ContactPoint",
         contactType: "business enquiries",
         email: brand.businessEmail,
         url: brand.url,
         availableLanguage: ["English"],
       },
+      {
+        "@type": "ContactPoint",
+        contactType: "security reports",
+        email: brand.securityEmail,
+        url: brand.url,
+        availableLanguage: ["English"],
+      },
     ],
-    // `sameAs` is deliberately absent. lib/content.ts currently links to each
-    // social platform's home page rather than an Erstian profile, and claiming
-    // those URLs as identity would tell search engines that Erstian is the same
-    // entity as the platforms themselves. Add real profile URLs here, and to
-    // footer.social in lib/content.ts, before adding this key.
+    /**
+     * Internbird as a `brand` of Erstian, not a separate `Organization`.
+     *
+     * `brand` is the correct schema.org type for a product line, and it carries
+     * `parentOrganization` — which is exactly the relationship: a platform
+     * Erstian operates. Emitting a second top-level Organization would tell
+     * search engines Internbird is a distinct legal entity, which contradicts
+     * what our Terms, Privacy Policy and Disclaimer all state.
+     */
+    brand: {
+      "@type": "Brand",
+      name: internbird.name,
+      url: internbird.url,
+      description: internbird.summary,
+      parentOrganization: { "@id": ID.organization },
+    },
+    // `sameAs` lists only real Erstian profiles, read from `footer.social` so
+    // the structured data and the visible footer can never disagree. It is
+    // currently empty, and stays absent rather than emitting an empty array —
+    // pointing at a platform's home page would tell search engines that Erstian
+    // is the same entity as the platform itself.
+    ...(SOCIAL_PROFILES.length > 0 ? { sameAs: SOCIAL_PROFILES } : {}),
   };
 }
 

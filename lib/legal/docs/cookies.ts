@@ -1,11 +1,14 @@
+import { internbird } from "@/lib/content";
 import { contactSection } from "@/lib/legal/shared";
 import type { LegalDoc } from "@/lib/legal/types";
 
 /**
  * Cookie Policy.
  *
- * The short version of this document is in its second intro paragraph, on
- * purpose. A reader who wants the summary should not have to reach section 2.
+ * Covers two surfaces with genuinely different behaviour: this website, which
+ * sets nothing, and Internbird, which uses cookies because the platform cannot
+ * function without them. Describing only the first was accurate but incomplete
+ * once Internbird existed.
  */
 export const cookies: LegalDoc = {
   slug: "cookies",
@@ -19,14 +22,14 @@ export const cookies: LegalDoc = {
     "Which cookies erstian.com uses, which it does not, and what changes if a future product needs them.",
   effective: "2026-01-15",
   intro: [
-    "This policy explains what cookies and similar technologies are, what this website uses, and what to do about it.",
-    "The honest summary: erstian.com currently sets no cookies at all. There is no analytics, no advertising and no consent banner, because a banner with nothing to consent to would only be theatre.",
+    "This policy explains what cookies and similar technologies are, what each of our sites uses, and what to do about it.",
+    `The honest summary: erstian.com sets no cookies at all, and ${internbird.name} uses only the cookies it needs to keep you signed in and remember your preferences. There is no advertising, no cross-site tracking and no profiling.`,
   ],
   related: ["privacy", "security", "terms"],
   sections: [
     {
       id: "what-are-cookies",
-      heading: "1. What cookies are",
+      heading: "1. What cookies are, and how they are categorised",
       blocks: [
         {
           type: "p",
@@ -63,8 +66,46 @@ export const cookies: LegalDoc = {
       ],
     },
     {
+      id: "internbird-cookies",
+      heading: "3. What Internbird uses",
+      blocks: [
+        {
+          type: "p",
+          text: `${internbird.name} uses cookies and similar storage because the platform cannot work without them. They are limited to what the service needs:`,
+        },
+        {
+          type: "definition",
+          items: [
+            {
+              term: "Session and authentication",
+              detail:
+                "Keeps you signed in and protects forms against cross-site request forgery. Without these you would be logged out on every page, and the platform would be less safe, not more.",
+            },
+            {
+              term: "Preferences",
+              detail:
+                "Remembers choices such as your theme, your notification settings and your last view, so the platform behaves the way you left it.",
+            },
+            {
+              term: "Security and abuse prevention",
+              detail:
+                "Rate limiting and bot detection, applied to sign-in and submission endpoints.",
+            },
+          ],
+        },
+        {
+          type: "p",
+          text: "What Internbird does not do: no advertising cookies, no cross-site behavioural tracking, no third-party marketing pixels, and no sale of browsing data. We do not build a profile of you for advertising purposes.",
+        },
+        {
+          type: "p",
+          text: "Because these cookies are strictly necessary for the service to function, they are set without asking. If we ever introduce anything that is not necessary, we will ask first, in a banner that refuses as easily as it accepts, and this page will list every cookie with its purpose and lifetime.",
+        },
+      ],
+    },
+    {
       id: "third-party-images",
-      heading: "3. Third-party images and what they expose",
+      heading: "4. Third-party images and what they expose",
       blocks: [
         {
           type: "p",
@@ -77,17 +118,17 @@ export const cookies: LegalDoc = {
       ],
     },
     {
-      id: "future-products",
-      heading: "4. When products need cookies",
+      id: "future-cookies",
+      heading: "5. If a product needs cookies in future",
       blocks: [
         {
           type: "p",
-          text: "Products are likely to need cookies for things a website cannot do without — keeping you signed in, remembering your preferences, or processing a subscription. When that happens we will:",
+          text: `Alongside ${internbird.name}, Erstian develops other products, and those may need cookies for things a service cannot do without — keeping you signed in, remembering preferences, or processing a payment. When that happens we will:`,
         },
         {
           type: "ul",
           items: [
-            "Publish a cookie policy listing every cookie, its purpose, its provider and how long it lasts.",
+            "List every cookie here with its purpose, its provider and how long it lasts.",
             "Ask for consent before setting anything non-essential, in a banner that refuses as easily as it accepts.",
             "Keep essential cookies working regardless of your choice, because without them the product will not function.",
           ],
@@ -96,29 +137,29 @@ export const cookies: LegalDoc = {
           type: "p",
           text: "You can withdraw consent at any time without losing access to anything that does not depend on it.",
         },
-        {
-          type: "note",
-          text: "When a product does introduce cookies, this page will be rewritten with a real table of what is set, rather than being left to describe a policy we do not yet have.",
-        },
       ],
     },
     {
       id: "control",
-      heading: "5. How to control cookies",
+      heading: "6. How to control cookies",
       blocks: [
         {
           type: "p",
-          text: "Every major browser lets you view, block and delete cookies and local storage. Because this site sets none, blocking them changes nothing here. We recommend keeping cookies enabled generally, as some sites rely on them.",
+          text: "Every major browser lets you view, block and delete cookies and local storage. Because this site sets none, blocking them changes nothing here. We recommend keeping cookies enabled generally, as some services rely on them.",
         },
         {
           type: "p",
-          text: "Privacy-focused browsers such as Firefox with Total Cookie Protection, or Brave, block third-party cookies by default. Nothing on this site depends on that behaviour.",
+          text: "If you block or delete the cookies Internbird relies on, you will be signed out and your session will not persist. That is the only consequence — nothing is deleted from your account, and signing back in restores it.",
+        },
+        {
+          type: "p",
+          text: "Privacy-focused browsers such as Firefox with Total Cookie Protection, or Brave, block third-party cookies by default. Neither of our sites depends on third-party cookies.",
         },
       ],
     },
     {
       id: "changes",
-      heading: "6. Changes to this policy",
+      heading: "7. Changes to this policy",
       blocks: [
         {
           type: "p",
@@ -126,6 +167,6 @@ export const cookies: LegalDoc = {
         },
       ],
     },
-    contactSection(7),
+    contactSection(8),
   ],
 };

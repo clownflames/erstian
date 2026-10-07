@@ -7,10 +7,18 @@ import { MaskedLines, Reveal, Stagger, StaggerItem } from "@/components/ui/revea
 import { RedDot, Section, SectionHeading, Shell } from "@/components/ui/section";
 import { SectionLabel } from "@/components/ui/section-label";
 import { ModulePreview, moduleVariants } from "@/components/visuals/module-preview";
-import { products } from "@/lib/content";
+import { internbird, products } from "@/lib/content";
 
-/** Module 3 is the one open slot — the rest are placeholders. */
-const ACTIVE_INDEX = 2;
+/**
+ * Section 04 — the product module field.
+ *
+ * Module 01 is Internbird and carries the only "Available" state in the field.
+ * That matters beyond the visual: a grid where every tile says "in development"
+ * reads as a company with nothing to sell, which is not true and is exactly the
+ * impression that makes a payment review harder. The active/in-development split
+ * mirrors reality — one live product, the rest in the pipeline.
+ */
+const INTERNBIRD_INDEX = 0;
 
 export function Products() {
   return (
@@ -46,34 +54,36 @@ export function Products() {
           stagger={0.07}
         >
           {moduleVariants.map((variant, i) => {
-            const active = i === ACTIVE_INDEX;
+            const live = i === INTERNBIRD_INDEX;
+            const name = live ? internbird.name : `Module 0${i + 1}`;
+
             return (
               <StaggerItem key={variant} index={i}>
                 <article
                   className={`group relative h-full bg-ink p-6 transition-colors duration-700 sm:p-7 ${
-                    active ? "bg-surface" : "hover:bg-ink-raise"
+                    live ? "bg-surface" : "hover:bg-ink-raise"
                   }`}
                   aria-label={
-                    active
-                      ? "Module 03 — coming soon"
+                    live
+                      ? `${internbird.name} — available now`
                       : `Module 0${i + 1} — in development`
                   }
                 >
-                  {active ? (
+                  {live ? (
                     <span
                       aria-hidden
                       className="pointer-events-none absolute inset-0 border border-red/70"
                     />
                   ) : null}
 
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between gap-4">
                     <span className="font-mono text-label tracking-[0.22em] text-fog">
                       0{i + 1}
                     </span>
-                    {active ? (
+                    {live ? (
                       <span className="label-xs flex items-center gap-2 text-signal">
                         <RedDot />
-                        Coming soon
+                        Available now
                       </span>
                     ) : (
                       <span className="label-xs text-fog">In development</span>
@@ -82,29 +92,29 @@ export function Products() {
 
                   <div
                     className={`mt-6 aspect-[200/120] w-full transition-all duration-700 ${
-                      active
+                      live
                         ? "opacity-90"
                         : "opacity-30 blur-[1.5px] group-hover:opacity-60 group-hover:blur-0"
                     }`}
                   >
-                    <ModulePreview variant={variant} active={active} />
+                    <ModulePreview variant={variant} active={live} />
                   </div>
 
                   <div className="mt-6 h-px w-full bg-line" />
 
-                  <div className="mt-4 flex items-center gap-3">
+                  <div className="mt-4 flex items-center justify-between gap-4">
                     <span
                       aria-hidden
-                      className={`h-px w-6 transition-all duration-700 ${
-                        active ? "w-12 bg-red" : "bg-ash"
+                      className={`h-px transition-all duration-700 ${
+                        live ? "w-12 bg-red" : "w-6 bg-ash"
                       }`}
                     />
                     <span
                       className={`label-xs transition-colors duration-700 ${
-                        active ? "text-bone" : "text-fog"
+                        live ? "text-bone" : "text-fog"
                       }`}
                     >
-                      {active ? "In progress" : "Planned"}
+                      {name}
                     </span>
                   </div>
                 </article>
@@ -113,31 +123,39 @@ export function Products() {
           })}
         </Stagger>
 
-        {/* Coming soon ----------------------------------------------- */}
+        {/* In development --------------------------------------------- */}
         <div className="mt-20 lg:mt-28">
           <h2 className="text-mega font-display uppercase text-bone">
-            <MaskedLines lines={["Coming", "soon."]} stagger={0.1} amount={0.15} />
+            <MaskedLines
+              lines={["In", "development."]}
+              stagger={0.1}
+              amount={0.15}
+            />
           </h2>
           <Marquee />
         </div>
 
         <Reveal className="mt-14 flex flex-col items-start gap-6 sm:flex-row sm:items-center lg:mt-20">
           <ActionLink href={products.cta.href}>{products.cta.label}</ActionLink>
-          <p className="max-w-[34ch] text-small text-fog">
-            We&rsquo;ll share progress publicly as the first generation of
-            products takes shape.
-          </p>
+          <ActionLink href={products.secondaryCta.href} tone="outline">
+            {products.secondaryCta.label}
+          </ActionLink>
         </Reveal>
       </Shell>
     </Section>
   );
 }
 
-/** Slow horizontal ticker of the same statement, edge to edge. */
+/**
+ * Slow ticker.
+ *
+ * Now a statement about the pipeline rather than a bare "coming soon", so the
+ * marquee does not contradict the live Internbird module directly above it.
+ */
 function Marquee() {
   const reduced = useReducedMotion();
 
-  const phrase = "Coming soon — Erstian —";
+  const phrase = "In development — Erstian —";
 
   return (
     <div

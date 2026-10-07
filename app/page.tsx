@@ -6,10 +6,10 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { About } from "@/components/site/about";
 import { AboutCompany } from "@/components/site/about-company";
 import { Approach } from "@/components/site/approach";
-import { ComingSoon } from "@/components/site/coming-soon";
 import { Contact } from "@/components/site/contact";
 import { Faq } from "@/components/site/faq";
 import { Hero } from "@/components/site/hero";
+import { InternbirdSection } from "@/components/site/internbird-section";
 import { Products } from "@/components/site/products";
 import { SiteFooter } from "@/components/site/site-footer";
 import { SiteHeader } from "@/components/site/site-header";
@@ -49,12 +49,14 @@ export default function Home() {
           <WhatWeBuild />
           <Approach />
           <Products />
+          {/* Internbird sits at index 05 — before the audience sections, because
+              it is the only offering a visitor can actually use today. */}
+          <InternbirdSection />
           <ForBusiness />
           <ForEverydayUsers />
           <WhyErstian />
           <Vision />
           <AboutCompany />
-          <ComingSoon />
           <Contact />
           <Faq />
         </main>

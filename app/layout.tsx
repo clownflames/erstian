@@ -3,7 +3,7 @@ import { Geist_Mono, Inter, Inter_Tight } from "next/font/google";
 
 import "./globals.css";
 import { JsonLd } from "@/components/seo/json-ld";
-import { brand } from "@/lib/content";
+import { brand, internbird } from "@/lib/content";
 import { DESCRIPTION, TITLE, siteJsonLd } from "@/lib/seo";
 
 const display = Inter_Tight({
@@ -82,6 +82,10 @@ export const metadata: Metadata = {
   keywords: [
     "Erstian",
     "software company",
+    internbird.name,
+    "internship platform",
+    "internship opportunities",
+    "career opportunities",
     "business software",
     "productivity tools",
     "utility software",

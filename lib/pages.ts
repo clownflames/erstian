@@ -10,7 +10,7 @@
  * of operation.
  */
 
-import { brand, navLinks } from "@/lib/content";
+import { brand, internbird, navLinks } from "@/lib/content";
 
 /**
  * Every standalone marketing page, in navigation order.
@@ -131,9 +131,9 @@ for (const link of navLinks) {
 export const aboutPage = {
   label: "About",
   heading: ["Building software", "from the ground up."],
-  lead: "Erstian exists to build software that solves real problems, plainly and accessibly.",
+  lead: "Erstian develops and operates digital products and services, including Internbird.",
   standfirst:
-    "We are early. There is no shipped product yet, no customer list to point at and no roadmap we are willing to publish as a date. What follows is what we believe, what we are building, and how we intend to work.",
+    "We run one live product today and build the rest in the open. What follows is what we believe, what we operate now, and how we intend to work.",
   sections: [
     {
       index: "01",
@@ -141,18 +141,18 @@ export const aboutPage = {
       heading: ["Everyday problems", "deserve everyday", "software."],
       body: [
         "Most software is built for a market that can afford it. Enterprise buyers with procurement teams, teams with a budget line for tooling, and people who already know what they want.",
-        "That leaves a lot of people solving the same simple problems with awkward tools. A small business running its day out of a spreadsheet. Someone managing a part-time business at eleven at night. A team whose real problem is that their process has six steps where two would do.",
+        "That leaves a lot of people solving the same simple problems with awkward tools. A small business running its day out of a spreadsheet. A student hunting through scattered job boards for an internship that actually fits. A team whose real problem is that their process has six steps where two would do.",
         "These are not problems that need more features. They need software that is understandable in a minute and useful every day after that.",
       ],
     },
     {
       index: "02",
-      label: "What we build",
-      heading: ["Focused products,", "not platforms."],
+      label: "What we operate",
+      heading: ["Internbird,", "and what comes", "after."],
       body: [
-        "Each Erstian product is built around one problem, described in a sentence a user could repeat back to you. If a feature does not serve that sentence, it does not ship.",
-        "We work across four categories — business software, productivity tools, utility software, and whatever we find next that solves a real problem. The categories are not a strategy; they are a description of where we currently think the problems are.",
-        "We would rather ship four products people keep using than one product that tries to be everything to everyone.",
+        internbird.prose,
+        "Internbird is the clearest example of how we build. Finding an internship should not mean twenty browser tabs and a mental model of which boards are worth checking. Matching a student to an opportunity they are actually suited for — and then keeping every application in one place — is a problem worth solving properly.",
+        "Alongside Internbird, Erstian builds business software, productivity tools and utility software. Those are in development. We publish their status rather than describing them as if they had shipped.",
       ],
     },
     {
@@ -180,7 +180,7 @@ export const aboutPage = {
       label: "Where we are going",
       heading: ["An ecosystem,", "one product", "at a time."],
       body: [
-        "The long-term goal is a growing set of useful software across the areas of everyday digital life — for businesses, for teams, and for individuals.",
+        "The long-term goal is a growing set of useful software across the areas of everyday digital life — for students, for businesses, for teams, and for individuals.",
         "We are not going to tell you when that will happen. Companies that publish a five-year plan and then quietly move the dates teach their audience to discount everything else they say. We would rather be useful this quarter and let the rest arrive when it arrives.",
         "If you want to follow along, the updates page is the honest place to look.",
       ],
@@ -198,13 +198,33 @@ export const aboutPage = {
 
 export const productsPage = {
   label: "Products",
-  heading: ["Four categories,", "one product", "at a time."],
-  lead: "Everything Erstian is working on, organised by the kind of problem it tries to solve.",
+  heading: ["One live,", "the rest in", "development."],
+  lead: "Everything Erstian operates and is building, organised by the problem it tries to solve.",
   standfirst:
-    "No Erstian product is publicly available yet. What follows is what we are building and what we think it is for — described honestly enough that you can disagree with us.",
+    "Internbird is live and accepting registrations and payments. Alongside it, Erstian develops business software, productivity tools and utility software. Certain products, features, programs or services may become available at different times.",
+  /**
+   * The live product, rendered as its own block above the development
+   * categories. Keeping it separate is the point: a single grid where every
+   * entry says "in development" misrepresents the business, and a reviewer
+   * checking whether anything is actually sold would struggle to tell that
+   * something is.
+   */
+  live: {
+    name: internbird.name,
+    url: internbird.url,
+    status: "Available now",
+    summary: internbird.summary,
+    body: "Finding an internship should not mean twenty browser tabs and no way to tell which boards are worth checking. Internbird matches students to internships, training programs and career opportunities suited to them, and keeps every application and document in one place.",
+    features: internbird.features,
+    audience: "Students — school, college and recent graduates",
+    cta: { label: "Visit Internbird", href: internbird.url },
+    secondaryCta: { label: "Ask a question", href: "/contact" },
+    footnote:
+      "Accounts, applications and payments are handled on the Internbird site, where the same Terms & Conditions, Privacy Policy and Refund & Cancellation Policy apply.",
+  },
   categories: [
     {
-      number: "01",
+      number: "02",
       title: ["Business", "software"],
       status: "In development",
       body: "Tools for businesses that run their day out of spreadsheets and inboxes. Task and workflow management, operations, and the reporting that follows from both — without the setup project.",
@@ -212,7 +232,7 @@ export const productsPage = {
       lookingFor: ["Task and workflow tools", "Inventory and operations", "Reporting that needs no analyst"],
     },
     {
-      number: "02",
+      number: "03",
       title: ["Productivity", "tools"],
       status: "In development",
       body: "Software for organising work and protecting the hours it takes. Focus, planning, and the small daily friction that adds up to a working day that feels longer than it was.",
@@ -220,7 +240,7 @@ export const productsPage = {
       lookingFor: ["Planning and focus", "Notes that stay searchable", "Low-friction daily use"],
     },
     {
-      number: "03",
+      number: "04",
       title: ["Utility", "software"],
       status: "In development",
       body: "Small, single-purpose tools for common digital annoyances. Open one, do the thing, close it. No account, no dashboard, no upsell.",
@@ -228,7 +248,7 @@ export const productsPage = {
       lookingFor: ["Single-purpose tools", "Works without an account", "No dark patterns"],
     },
     {
-      number: "04",
+      number: "05",
       title: ["Future", "products"],
       status: "Exploring",
       body: "The category we cannot describe yet, because we have not found the problem worth building for. This entry exists so the list is honest about having an open end.",
@@ -274,7 +294,10 @@ export const productsPage = {
   notYet: {
     heading: ["What is not", "on this page."],
     body: [
-      "Prices, because nothing is available to price. Dates, because publishing a date we might miss teaches you to distrust the rest of the page. Customer logos, because there are no customers yet. A comparison table, because there is nothing to compare against.",
+      "Prices for anything in development. Nothing is for sale that we have not put a price on, and nothing is for sale without a checkout that shows you the total first.",
+      "Dates. Publishing a date we might miss teaches you to distrust the rest of the page.",
+      "Customer logos, because we would rather show you working software than a wall of names.",
+      "A comparison table, because there is nothing yet worth comparing against.",
       "When those exist, they will appear here. You do not have to take our word for it in the meantime.",
     ],
   },
@@ -299,40 +322,50 @@ export const updatesPage = {
       version: "Site 001",
       date: "2026-01-15",
       state: "Live",
-      title: "This website exists",
+      title: "Internbird is live",
       body: [
-        "The erstian.com site is up. It describes what we intend to build, and it is honest about the fact that none of it is available yet.",
-        "Everything on it — the legal documents, the privacy policy, the way the pages are structured — is written to be the version we keep using, rather than a placeholder we will replace under pressure later.",
+        `${internbird.name} is available at ${internbird.url}. It helps students discover internships, training programs and career opportunities, and manage the applications that follow.`,
+        "Internbird is a product/platform operated by Erstian. It is covered by the same Terms & Conditions, Privacy Policy and Refund & Cancellation Policy as the rest of our services, and it is where payments are processed.",
       ],
     },
     {
       version: "Site 002",
       date: "2026-01-15",
-      state: "In progress",
-      title: "First product, in development",
+      state: "Live",
+      title: "This website exists",
       body: [
-        "We are building the first of the products described on the products page. It is not ready and we will not put a date on it until we understand our own timeline well enough to be worth trusting.",
-        "What we can say: it solves a specific, common problem, it will not require a demo call, and it will work without an account if it can.",
+        "The erstian.com site is up. It describes what we operate today, what we are building, and what that costs.",
+        "The legal documents — terms, privacy, refunds, security, DPA — are written to be the versions we keep using, not placeholders we will replace under pressure later.",
       ],
     },
     {
       version: "Site 003",
       date: "2026-01-15",
       state: "In progress",
-      title: "Accessibility and privacy, as constraints",
+      title: "Business, productivity and utility software",
       body: [
-        "Accessibility is being treated as a requirement on this site and on our products rather than a review at the end — WCAG 2.2 AA as the target, with the gaps listed in public.",
-        "We ship no analytics, no advertising trackers and no cookies on this site, and we publish what that means. It costs us the ability to tell you which pages are popular. We think that is the right trade for a site with nothing to sell yet.",
+        "Alongside Internbird, Erstian is building business software, productivity tools and small utility software. None of them is ready.",
+        "We will not put a date on any of them until we understand our own timeline well enough to be worth trusting. What we can say: each solves a specific, common problem, and none will require a demo call.",
       ],
     },
     {
       version: "Site 004",
       date: "2026-01-15",
+      state: "In progress",
+      title: "Accessibility and privacy, as constraints",
+      body: [
+        "Accessibility is treated as a requirement on this site and on our products rather than a review at the end — WCAG 2.2 AA as the target, with the gaps listed in public.",
+        "We ship no analytics and no advertising trackers on this site, and we publish what that means. It costs us the ability to tell you which pages are popular, which we think is the right trade.",
+      ],
+    },
+    {
+      version: "Site 005",
+      date: "2026-01-15",
       state: "Planned",
       title: "A changelog for the products",
       body: [
-        "Once there is a product people can install, every release gets a note: what changed, what broke, and what we fixed.",
-        "We will publish it here and link it from each product page. A changelog is how a company that wants to be trusted handles the version where something goes wrong.",
+        "Every release will get a note: what changed, what broke, and what we fixed.",
+        "We will publish it here and link it from each product. A changelog is how a company that wants to be trusted handles the version where something goes wrong.",
       ],
     },
   ],
@@ -347,7 +380,7 @@ export const updatesPage = {
   },
   closing: {
     heading: "Follow along",
-    body: "There is no newsletter yet. If you want to hear when something lands, the honest answer is to email us and say so — we will tell you when there is.",
+    body: "There is no newsletter yet. If you want to hear when something launches, the honest answer is to email us and say so — we will tell you when there is.",
     primary: { label: "Get in touch", href: "/contact" },
     secondary: { label: "See products", href: "/products" },
   },
@@ -368,57 +401,90 @@ export const faqPage = {
         {
           question: "What is Erstian?",
           answer:
-            "Erstian is a software company building digital products for businesses and everyday users. We are at the start of that journey — the site describes what we intend to build, and no product is publicly available yet.",
+            "Erstian is a technology company that develops and operates digital products and services, including Internbird.",
+        },
+        {
+          question: "What is Internbird?",
+          answer: internbird.summary,
+        },
+        {
+          question: "Is Internbird a separate company?",
+          answer:
+            "No. Internbird is a product/platform operated by Erstian. It is covered by the same Terms & Conditions, Privacy Policy and Refund & Cancellation Policy as the rest of our services, and reaching Internbird support reaches us.",
+        },
+        {
+          question: "Where can I use Internbird?",
+          answer: `Internbird is at ${internbird.url}.`,
         },
         {
           question: "Are you a real company with staff?",
           answer:
             "We are a real company doing real work, and we are small. We would rather tell you that than imply a headcount that might not match reality.",
         },
-        {
-          question: "Where are you based?",
-          answer:
-            "We work remotely and serve customers wherever they are. Our registered details are published in the site disclaimer.",
-        },
-        {
-          question: "Who funds Erstian?",
-          answer:
-            "That is not something we can talk about publicly. What we can say is that no product has been paid for by anyone yet, so no customer has a stake in what we build.",
-        },
       ],
     },
     {
-      label: "Products",
+      label: "Products & availability",
       items: [
         {
-          question: "What kind of software do you build?",
+          question: "What products does Erstian operate?",
           answer:
-            "Practical software across four areas: business tools, productivity tools, small utilities, and whatever we find next that solves a real problem. The products page describes each one and who it is for.",
+            "Internbird is live today. Alongside it we develop business software, productivity tools and small utility software. Certain products, features, programs or services may become available at different times.",
         },
         {
           question: "Can I use an Erstian product today?",
           answer:
-            "No. Nothing is publicly available. We would rather say that plainly than take an email address for something that does not exist yet.",
+            "Yes — Internbird. It is available now and accepting registrations and payments. The other products are in development, and the products page says which is which.",
         },
         {
-          question: "When will the first product launch?",
+          question: "When will the next products launch?",
           answer:
-            "We do not know, and a date from us today would not be worth anything. When we have a product that works, we will say so here and tell you what it does and what it costs.",
+            "We do not know, and a date from us today would not be worth anything. When a product works, we will say so on the updates page and tell you what it does and what it costs.",
         },
         {
-          question: "Will products be free or paid?",
+          question: "Are products free or paid?",
           answer:
-            "Both, most likely. Subscription will be an important part of how we work, alongside free tools and one-off purchases. We will state the price before you commit to anything.",
+            "Both. Some offerings on Internbird are paid, others are not. Where something costs money you will see the price and the total before you commit to anything, and our Refund & Cancellation Policy explains your options.",
         },
         {
           question: "Can I suggest a product idea?",
           answer:
             "Please do. Tell us about the problem rather than the solution — what you were trying to do, and what got in the way. It genuinely changes what we build next, and we will tell you honestly whether it is something we can build.",
         },
+      ],
+    },
+    {
+      label: "Payments & refunds",
+      items: [
         {
-          question: "Can I integrate with or use your API?",
+          question: "How do I pay?",
           answer:
-            "Not yet, because there is nothing to integrate with. When a product needs an API, we will document it properly rather than leaving you to reverse-engineer it.",
+            "Payments are processed by a third-party payment provider on a secure checkout page. Before you pay you will see what you are buying, what it costs in total, what you receive, and the cancellation terms.",
+        },
+        {
+          question: "Do you store my card or UPI details?",
+          answer:
+            "No. Card numbers, CVVs, UPI PINs and banking credentials are entered on the payment provider's own secure page and never reach us. We keep only the transaction reference, amount, date, status and the email address on your order — what we need to deliver it and handle refunds.",
+        },
+        {
+          question: "Can I get a refund?",
+          answer:
+            "Yes, where the product allows it. You can request a refund if a service was not delivered, did not match its description, was unavailable for a significant part of the period, if you were charged twice, or if an amount was debited but the payment did not complete.",
+        },
+        {
+          question: "How long does a refund take?",
+          answer:
+            "We acknowledge a refund request within 3 business days and decide within 10. Once approved we initiate the refund through the same provider, normally within 10 business days. How long it then takes to appear in your account depends on your bank — we will give you the reference so you can chase it with them.",
+        },
+        {
+          question: "My payment failed but money left my account. What now?",
+          answer:
+            "Email our billing address with your transaction reference. A debited amount with no confirmed order is treated as a failed payment, and we will either confirm the order or refund you. See section 6 of our Refund & Cancellation Policy.",
+        },
+        {
+          question: "I was charged twice. What do I do?",
+          answer:
+            "Email us the two transaction references. We refund the duplicate in full. You do not need to argue your case — a duplicated charge is our problem to resolve.",
         },
       ],
     },
@@ -428,22 +494,57 @@ export const faqPage = {
         {
           question: "Do you track me on this website?",
           answer:
-            "No. There are no analytics scripts, no advertising pixels and no cookies. We can see that a page was requested in server logs; we cannot tell which pages you visited or where you came from.",
+            "No. There are no analytics scripts, no advertising pixels and no cookies on erstian.com. We can see that a page was requested in server logs; we cannot tell which pages you visited or where you came from.",
+        },
+        {
+          question: "What happens to my Internbird data?",
+          answer:
+            "Our Privacy Policy sets out exactly what we collect — account details, your profile, applications and documents you upload, and your transaction records — why we collect it, who sees it (including employers you apply to) and how long we keep it.",
         },
         {
           question: "Can I get my data deleted?",
           answer:
-            "Yes. If you have emailed us, write to the same address and ask for deletion, and we will do it. We respond to privacy requests within 30 days and do not charge for them.",
+            "Yes. You can delete your Internbird account from your account settings, or email us and ask. We respond to privacy requests within the period the law requires and do not charge for them. Some transaction records are retained because tax law requires it — ask and we will tell you exactly what we kept.",
         },
         {
-          question: "Will a product store my data?",
+          question: "Can I get a refund and delete my account in one go?",
           answer:
-            "A product that does its job will store some, and its privacy notice will say exactly what and for how long, before it accepts any data. That notice governs — not the notice on this website.",
+            "Yes. Send one message asking for both. If an application is with an employer we cannot withdraw it from their own systems, and we will tell you who you applied to so you can ask them directly.",
         },
         {
           question: "Do you sell my data?",
           answer:
-            "No, and we never have. We do not buy data about visitors either.",
+            "No, and we never have. We do not buy data about visitors, and we do not use what you give us for advertising profiles.",
+        },
+        {
+          question: "Is my password readable by Erstian?",
+          answer:
+            "No. Passwords are stored as one-way salted hashes. Our database holds a hash rather than your password, so a copy of it would not reveal it.",
+        },
+      ],
+    },
+    {
+      label: "Using Internbird",
+      items: [
+        {
+          question: "How does matching work?",
+          answer:
+            "We match opportunities against the skills, interests and preferences in your profile. The more you tell us, the better the match — anything you leave out, we cannot use.",
+        },
+        {
+          question: "Does an internship listing guarantee me a place?",
+          answer:
+            "No. Listing an opportunity does not guarantee a response, an interview or an offer. Erstian is not the employer, and we do not control what an employer does after you apply.",
+        },
+        {
+          question: "Who sees my application documents?",
+          answer:
+            "The employer or program you applied to, which is what applying means. We do not sell applications or share them with anyone else.",
+        },
+        {
+          question: "Can I apply on behalf of someone else?",
+          answer:
+            "No. Applying in your own name with your own accurate qualifications is a condition of using Internbird. Misrepresenting your education or experience can have real consequences for you, and we may suspend accounts that do it.",
         },
       ],
     },
@@ -458,7 +559,7 @@ export const faqPage = {
         {
           question: "Do you offer internships or freelance work?",
           answer:
-            "Not currently. When we have the capacity to supervise either properly, we will say so here rather than fielding speculative applications.",
+            "Not as paid roles today, and we would rather say that plainly than keep a listings page warm. If you are using Internbird to find an internship, that is a different thing — see the Internbird section above.",
         },
         {
           question: "Can I write about Erstian?",
@@ -492,7 +593,7 @@ export const careersPage = {
   status: {
     heading: ["Where we are", "today"],
     body: [
-      "Erstian is a small team working on its first products. We are not hiring, and we are not going to create a role to have a pipeline to choose from — a company that hires ahead of having work is spending someone's year badly.",
+      "Erstian is a small team operating Internbird and building its next products. We are not hiring, and we are not going to create a role to have a pipeline to choose from — a company that hires ahead of having the work is spending someone's year badly.",
       "If you are interested in working with us, the honest routes are: send us a problem you would want solved, or send us something you have built. Both are read by people who do the work.",
     ],
     channels: [
@@ -606,12 +707,28 @@ export const contactPage = {
       response: "Acknowledged within 2 business days",
     },
     {
+      label: "Billing & refunds",
+      value: brand.businessEmail,
+      href: `mailto:${brand.businessEmail}`,
+      bestFor:
+        "Refunds, cancellations, failed payments, duplicate charges — include your transaction reference",
+      response: "Acknowledged within 3 business days",
+    },
+    {
       label: "Privacy",
       value: brand.email,
       href: `mailto:${brand.email}`,
       bestFor:
         "Data requests, access, deletion, or a complaint — say privacy and it reaches the right person",
       response: "Within 30 days, as the law requires",
+    },
+    {
+      label: "Internbird support",
+      value: brand.email,
+      href: `mailto:${brand.email}`,
+      bestFor:
+        "Anything about an Internbird account, application or payment — or use the in-app support on Internbird",
+      response: "Within 2 business days",
     },
     {
       label: "Press",
@@ -621,6 +738,12 @@ export const contactPage = {
       response: "Within 3 business days",
     },
   ],
+  /** The live product, linked from the contact page so it is never a dead end. */
+  internbird: {
+    name: internbird.name,
+    url: internbird.url,
+    note: "Account, application and payment questions about Internbird can go to the address above, or straight to the support option inside the app.",
+  },
   expectations: {
     heading: ["What happens", "after you", "write."],
     steps: [
@@ -632,7 +755,7 @@ export const contactPage = {
       {
         number: "02",
         title: "You get a straight answer",
-        body: "If we can help, we will say how. If we cannot, we will say that too, and mean it. If the question is about a product that does not exist yet, that is the answer.",
+        body: "If we can help, we will say how. If we cannot, we will say that too, and mean it. If the question is about a product that is not out yet, that is the answer.",
       },
       {
         number: "03",
@@ -645,6 +768,8 @@ export const contactPage = {
     heading: ["Saves us both", "a round trip."],
     items: [
       "What you are trying to do, in your own words.",
+      "If it is about a payment, your transaction reference or order ID — it is in your confirmation email and in your account.",
+      "If it is about an Internbird application, which opportunity it relates to.",
       "If it is about work, the tool or process involved.",
       "Your platform and operating system, if the answer depends on them.",
       "Anything you have already tried. Genuinely — the obvious answer is often the right one.",
@@ -653,7 +778,7 @@ export const contactPage = {
   },
   note: {
     heading: ["One thing", "worth saying"],
-    body: "We are a small company with no shipped product. If you write asking when something launches, the answer is 'we do not know yet' — and it will stay that answer until we genuinely do, rather than a date designed to make you feel better.",
+    body: "Internbird is live, and the rest of our products are not. If you write asking when something launches, the answer is 'we do not know yet' — and it will stay that answer until we genuinely do, rather than a date designed to make you feel better. If you are asking about a payment on Internbird, we can usually resolve it immediately.",
   },
   closing: {
     heading: "Still here?",

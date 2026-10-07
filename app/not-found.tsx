@@ -6,6 +6,7 @@ import { SmoothScrollProvider } from "@/components/providers/smooth-scroll";
 import { MaskedLines } from "@/components/ui/reveal";
 import { Logo } from "@/components/ui/logo";
 import { Shell } from "@/components/ui/section";
+import { internbird } from "@/lib/content";
 import { subpages } from "@/lib/pages";
 
 export const metadata: Metadata = {
@@ -78,6 +79,26 @@ export default function NotFound() {
                   </Link>
                 </li>
               ))}
+
+              {/* The live product, so a mistyped URL still leads somewhere
+                  that works rather than only to documents. */}
+              <li>
+                <a
+                  href={internbird.url}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="group flex items-center justify-between gap-4 border-b border-line py-4 text-small text-bone-dim transition-colors duration-400 hover:text-bone"
+                >
+                  {internbird.name}
+                  <span
+                    aria-hidden
+                    className="text-signal transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                  >
+                    ↗
+                  </span>
+                  <span className="sr-only">(opens in a new tab)</span>
+                </a>
+              </li>
             </ul>
           </nav>
         </Shell>

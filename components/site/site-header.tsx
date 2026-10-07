@@ -6,9 +6,8 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 import { useSmoothScroll } from "@/components/providers/smooth-scroll";
-import { ActionLink } from "@/components/ui/action-link";
 import { Logo } from "@/components/ui/logo";
-import { brand, navLinks } from "@/lib/content";
+import { brand, internbird, navLinks } from "@/lib/content";
 import { EASE } from "@/lib/motion";
 
 /**
@@ -23,8 +22,9 @@ import { EASE } from "@/lib/motion";
  * and it is cheap enough to keep everywhere.
  */
 export function SiteHeader({ showProgress = false }: { showProgress?: boolean }) {
-  // `scrollTo` is deliberately not destructured: the only in-page CTA below
-  // (#contact) is handled inside ActionLink, which owns its own scroll logic.
+  // `scrollTo` is deliberately not destructured: nothing in the header
+  // navigates in-page any more. The primary CTA is external, and the nav is all
+  // routes — see the note above.
   const { lock, unlock, progress } = useSmoothScroll();
   const pathname = usePathname();
   const reduced = useReducedMotion();
@@ -87,13 +87,15 @@ export function SiteHeader({ showProgress = false }: { showProgress?: boolean })
   const isActive = (href: string) => pathname === href;
 
   /**
-   * The "Get Started" CTA.
+   * The primary CTA.
    *
-   * On the home page it scrolls to the in-page contact section. Everywhere else
-   * there is no `#contact` to scroll to, so it navigates to /contact — otherwise
-   * the same link silently does nothing on every subpage.
+   * Points at Internbird rather than a contact form. It is the one thing a
+   * visitor can actually do today — sign up and use it — and a button that sends
+   * someone to an email address when a working product is one click away is the
+   * wrong primary action for a business that now takes payments.
+   *
+   * External, so it opens in a new tab and says so to assistive tech.
    */
-  const ctaHref = pathname === "/" ? "#contact" : "/contact";
 
   return (
     <>
@@ -162,14 +164,21 @@ export function SiteHeader({ showProgress = false }: { showProgress?: boolean })
           </ul>
 
           <div className="flex items-center gap-3">
-            <ActionLink
-              href={ctaHref}
-              tone="outline"
-              withArrow={false}
-              className="hidden !px-5 !py-2.5 text-label lg:inline-flex"
+            <a
+              href={internbird.url}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="label-xs hidden items-center gap-2 border border-line px-5 py-3 text-bone transition-colors duration-500 hover:border-transparent hover:bg-bone hover:text-ink lg:inline-flex"
             >
-              Get Started
-            </ActionLink>
+              {internbird.name}
+              <span
+                aria-hidden
+                className="text-signal transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-0.5"
+              >
+                ↗
+              </span>
+              <span className="sr-only">(opens in a new tab)</span>
+            </a>
 
             <button
               ref={triggerRef}
@@ -260,13 +269,18 @@ export function SiteHeader({ showProgress = false }: { showProgress?: boolean })
               animate={reduced ? undefined : { opacity: 1 }}
               transition={{ duration: 0.6, delay: reduced ? 0 : 0.55 }}
             >
-              <ActionLink
-                href={ctaHref}
-                onNavigate={() => setMenuOpen(false)}
-                className="w-full justify-center"
+              {/* The live product is the primary action on mobile too. */}
+              <a
+                href={internbird.url}
+                target="_blank"
+                rel="noreferrer noopener"
+                onClick={() => setMenuOpen(false)}
+                className="flex w-full select-none items-center justify-center gap-3 bg-bone px-6 py-4 text-label font-medium tracking-[0.16em] uppercase text-ink transition-colors duration-500 hover:bg-red hover:text-bone"
               >
-                Get Started
-              </ActionLink>
+                Get Started on {internbird.name}
+                <span aria-hidden>→</span>
+                <span className="sr-only">(opens in a new tab)</span>
+              </a>
 
               <a
                 href={`mailto:${brand.email}`}

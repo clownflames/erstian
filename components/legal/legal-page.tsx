@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { Logo } from "@/components/ui/logo";
 import { Shell } from "@/components/ui/section";
-import { brand, copyrightLine } from "@/lib/content";
+import { brand, copyrightLine, internbird } from "@/lib/content";
 import { relatedDocs, type LegalBlock, type LegalDoc } from "@/lib/legal";
 
 /**
@@ -16,6 +16,11 @@ import { relatedDocs, type LegalBlock, type LegalDoc } from "@/lib/legal";
  *      Lenis, which hijacks `#` navigation; on a document with a table of
  *      contents the browser's own behaviour is both more predictable and
  *      keyboard-accessible.
+ *
+ * `block.text` is rendered as a plain string rather than parsed as markdown or
+ * JSX. Legal copy is prose, and a syntax error in a clause is not something a
+ * renderer should swallow — anything that renders as HTML here has to be
+ * authored deliberately.
  */
 
 const DATE_FORMAT = new Intl.DateTimeFormat("en-GB", {
@@ -176,6 +181,24 @@ export function LegalPage({ doc }: { doc: LegalDoc }) {
             All legal documents
             <span aria-hidden>→</span>
           </Link>
+
+          {/* Internbird in the document bar, so the live product is reachable
+              from every legal page without going back to the footer. */}
+          <a
+            href={internbird.url}
+            target="_blank"
+            rel="noreferrer noopener"
+            className="label-xs group hidden items-center gap-2 text-bone-dim transition-colors duration-400 hover:text-bone lg:flex"
+          >
+            {internbird.name}
+            <span
+              aria-hidden
+              className="transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+            >
+              ↗
+            </span>
+            <span className="sr-only">(opens in a new tab)</span>
+          </a>
 
           <Link
             href="/"

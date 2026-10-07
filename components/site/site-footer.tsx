@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import { Logo } from "@/components/ui/logo";
 import { useSmoothScroll } from "@/components/providers/smooth-scroll";
-import { brand, copyrightLine, footer } from "@/lib/content";
+import { brand, copyrightLine, footer, internbird } from "@/lib/content";
 import { EASE } from "@/lib/motion";
 
 export function SiteFooter() {
@@ -72,7 +72,6 @@ export function SiteFooter() {
         <div className="shell mt-16 lg:mt-24">
           <div className="flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-line pt-8">
             <span className="label-xs text-fog">Elsewhere</span>
-
             <ul className="flex flex-wrap items-center gap-x-7 gap-y-3">
               {footer.social.map((item, i) => (
                 <motion.li
@@ -120,14 +119,36 @@ export function SiteFooter() {
 
       {/* Bottom bar --------------------------------------------------- */}
       <div className="shell mt-14 pb-10 lg:mt-20">
-        <div className="flex flex-col gap-4 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-6 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between">
           <p className="label-xs text-fog">{copyrightLine()}</p>
-          <Link
-            href="/legal"
-            className="label-xs text-fog transition-colors duration-400 hover:text-signal"
-          >
-            Legal documents
-          </Link>
+
+          <div className="flex flex-col items-start gap-3 sm:items-end">
+            {/* External destinations are marked as such. A link that leaves the
+                site should not look identical to one that stays on it, and
+                screen-reader users get the same warning sighted users do. */}
+            <a
+              href={internbird.url}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="label-xs group flex items-center gap-2 text-fog transition-colors duration-400 hover:text-signal"
+            >
+              {internbird.name}
+              <span
+                aria-hidden
+                className="text-signal transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              >
+                ↗
+              </span>
+              <span className="sr-only">(opens in a new tab)</span>
+            </a>
+
+            <Link
+              href="/legal"
+              className="label-xs text-fog transition-colors duration-400 hover:text-signal"
+            >
+              Legal documents
+            </Link>
+          </div>
         </div>
       </div>
 

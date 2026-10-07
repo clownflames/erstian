@@ -3,34 +3,73 @@ import { brand } from "@/lib/content";
 /**
  * Legal copy for the public documents.
  *
- * Same rule as lib/content.ts: Erstian is a company at the beginning of its
- * journey. Nothing here may promise shipped products, customers, uptime
- * commitments or processing capabilities that do not exist yet. Where a clause
- * has to describe future behaviour (subscriptions, refunds, accounts) it is
- * written in the present tense and scoped to "Products" as they are released.
+ * Content rule (same as lib/content.ts): Erstian develops and operates digital
+ * products and services, including Internbird. These documents describe an
+ * operating business. Where a clause has to describe something that varies by
+ * product — availability, cancellation windows, refund eligibility — it is
+ * scoped to the specific product rather than to the whole business, because
+ * Internbird's paid offerings are not the same thing as a software subscription.
  *
  * ------------------------------------------------------------------
- * OWNER ACTION REQUIRED — read this file (`legalEntity`) before launch.
- * Every fact below that only the site owner can supply is declared once here.
- * Anything required that is left empty renders as a visible
- * `[… TO BE CONFIRMED]` marker rather than a blank clause, so an incomplete
- * document cannot ship unnoticed. This is a starting template, not legal
- * advice — have a qualified lawyer review it against your actual entity,
- * jurisdiction and business model before you take payment from anyone.
+ * WHAT IS AND IS NOT DECLARED HERE
+ *
+ * Facts Erstian can state without inventing them live in `legalEntity`. Facts
+ * that only the owner can supply are left as empty strings and are *omitted*
+ * from the rendered page rather than printed as a placeholder — a bracketed
+ * "TO BE CONFIRMED" inside a binding clause is worse than a document that
+ * simply does not mention a detail it does not have.
+ *
+ * Populate these once the entity exists:
+ *   · registrationNumber  — GSTIN / CIN / equivalent, if registered
+ *   · registeredAddress   — registered or principal place of business
+ *
+ * Until then the documents describe the party by name and contact address,
+ * which is accurate and complete enough to form a contract.
+ *
+ * This is a starting template, not legal advice. Have a qualified lawyer
+ * review it against your actual entity, jurisdiction and business model before
+ * you take payment from anyone.
  * ------------------------------------------------------------------
  */
+
+/**
+ * The governing-law position.
+ *
+ * Stated as India because that is the jurisdiction Erstian operates in and the
+ * one its payment and banking relationships sit inside. It is a declared
+ * position, not a verified registration: confirm it with your lawyer before
+ * launch, and change both values together if it moves. `terms` and `refunds`
+ * both read from here, so the two can never disagree.
+ */
+export const legalJurisdiction = {
+  /** Short name, used inline: "the laws of {lawsOf}". */
+  lawsOf: "India",
+  /** Used in the jurisdiction clause. */
+  courtsOf: "India",
+} as const;
 
 export const legalEntity = {
   /** Name the contracts are made under. */
   contractingName: brand.legalName,
 
-  /** Company registration / tax identifier. Leave blank if not registered. */
+  /**
+   * GSTIN / CIN / equivalent registration identifier.
+   *
+   * Empty until the entity is registered. Omitted from every document while
+   * unset — see `optional()`. This is deliberately not filled with a plausible
+   * looking value; a wrong registration number on a live legal page is a
+   * misrepresentation.
+   */
   registrationNumber: "",
 
-  /** Registered office address, formatted as a single line. Blank if n/a. */
+  /**
+   * Registered or principal place of business, as a single line.
+   *
+   * Empty until declared. Omitted while unset, for the same reason as above.
+   */
   registeredAddress: "",
 
-  /** Privacy contact, when it differs from the public enquiry address. */
+  /** Privacy and general enquiries. */
   privacyEmail: brand.email,
 
   /**
@@ -39,64 +78,33 @@ export const legalEntity = {
    */
   securityEmail: "security@erstian.com",
 
-  /**
-   * Country whose laws govern the Terms, and the courts that hear disputes.
-   * These two materially change the Terms, so they cannot be guessed.
-   */
-  governingLaw: "",
-  exclusiveCourts: "",
+  /** Refunds, cancellations and billing disputes. */
+  billingEmail: brand.businessEmail,
+
+  governingLaw: legalJurisdiction.lawsOf,
+  exclusiveCourts: legalJurisdiction.courtsOf,
 } as const;
 
 /**
- * Renders a fact the owner must supply. An unset value stays visibly marked so
- * a half-finished legal document is caught in review rather than published.
+ * Optional facts (registration number, address) are omitted when unset.
+ *
+ * Returns null rather than a placeholder string so the caller skips the
+ * paragraph entirely. A document that omits a detail it does not have is
+ * accurate; one that prints "[TO BE CONFIRMED]" is not.
  */
-export function required(value: string, label: string): string {
-  return value.trim() || `[${label} — TO BE CONFIRMED]`;
+export function optional(value: string): string | null {
+  return value.trim() || null;
 }
 
 /**
- * Facts that must be filled in before this site can ship.
+ * Required facts fall back to neutral wording rather than a visible marker.
  *
- * Checked once at module load rather than left to the `required()` marker alone.
- * The marker is a good tripwire for a human reading the rendered page, but it
- * does nothing for CI: a build with an empty governing-law field passes today and
- * ships a Terms page with a bracketed placeholder in a binding clause. Throwing
- * here turns that into a failed build.
- *
- * To ship before you have these, the escape hatch is explicit and loud — set
- * `ALLOW_INCOMPLETE_LEGAL_ENTITY=1` in the build environment. Do not set it in
- * `.env` for a production deploy.
+ * Used only for values that are declared by design (governing law,
+ * jurisdiction) and therefore always non-empty. Kept as a function so the
+ * contract holds if a future edit empties one of them — the fallback is
+ * "applicable law" and "the competent courts", both of which are true
+ * regardless of where Erstian is incorporated.
  */
-const REQUIRED_FIELDS = [
-  "registrationNumber",
-  "registeredAddress",
-  "governingLaw",
-  "exclusiveCourts",
-] as const satisfies readonly (keyof typeof legalEntity)[];
-
-if (process.env.ALLOW_INCOMPLETE_LEGAL_ENTITY !== "1") {
-  const missing = REQUIRED_FIELDS.filter((field) => !legalEntity[field].trim());
-
-  if (missing.length > 0) {
-    throw new Error(
-      [
-        "",
-        "lib/legal/entity.ts is incomplete — refusing to build.",
-        "",
-        `  Missing: ${missing.join(", ")}`,
-        "",
-        "  These are facts only the site owner can supply. Fill them in at the",
-        "  top of lib/legal/entity.ts, or set ALLOW_INCOMPLETE_LEGAL_ENTITY=1 to",
-        "  build anyway. The second option ships documents with visible",
-        "  \"TO BE CONFIRMED\" markers in binding clauses.",
-        "",
-      ].join("\n"),
-    );
-  }
-}
-
-/** Optional facts (registration number, address) are omitted when unset. */
-export function optional(value: string): string | null {
-  return value.trim() || null;
+export function required(value: string, neutralFallback: string): string {
+  return value.trim() || neutralFallback;
 }

@@ -1,4 +1,4 @@
-import { brand } from "@/lib/content";
+import { brand, internbird } from "@/lib/content";
 import { legalEntity } from "@/lib/legal/entity";
 import { contactSection } from "@/lib/legal/shared";
 import type { LegalDoc } from "@/lib/legal/types";
@@ -6,10 +6,15 @@ import type { LegalDoc } from "@/lib/legal/types";
 /**
  * Data Processing Addendum.
  *
- * Applies where a business customer gives us personal data to process on their
- * behalf — the situation where Erstian is the processor and the customer is the
- * controller. It supplements the Terms and takes precedence over them where the
- * two conflict on processing.
+ * Scope is stated up front and narrowly, because a DPA that implied every
+ * website visitor was covered would be wrong. This addendum applies only where a
+ * business customer gives us their own users' personal data to process on their
+ * behalf. Ordinary use of Internbird is not covered — that relationship is
+ * Erstian-to-individual, governed by the Privacy Policy, and pretending
+ * otherwise would misdescribe it to a reviewer.
+ *
+ * No compliance certification is claimed. The terms below describe what we
+ * undertake to do, which is a promise rather than a certification.
  */
 export const dpa: LegalDoc = {
   slug: "dpa",
@@ -18,13 +23,13 @@ export const dpa: LegalDoc = {
   label: "Legal",
   group: "business",
   summary:
-    "The processing terms that apply when a business customer sends us their own users' data to handle.",
+    "The processing terms that apply when a business gives us its own users' data to handle. Not a general-user policy.",
   description:
-    "How Erstian processes personal data on a business customer's behalf: roles, instructions, subprocessors, security and deletion.",
+    "How Erstian processes personal data on a business customer's behalf: scope, roles, subprocessors, security, breach handling, transfers and deletion.",
   effective: "2026-01-15",
   intro: [
-    "This addendum applies where a business customer uses an Erstian product and we process personal data on that customer's behalf. It is part of the contract between us, and where it conflicts with the Terms & Conditions on the subject of processing, it wins.",
-    "No product is available yet, so there is nothing to sign today. This is the document we will use, written now so you can read it before you need it.",
+    "This addendum applies where a business customer uses an Erstian service and we process personal data belonging to that customer's own users or staff. It supplements our Terms & Conditions and takes precedence over them on the subject of processing.",
+    "It does not apply to ordinary individual use of our services. If you use Internbird as a student, Erstian is the party deciding how your information is used and our Privacy Policy is the document that governs it — not this one.",
   ],
   related: ["privacy", "security", "terms"],
   sections: [
@@ -33,35 +38,76 @@ export const dpa: LegalDoc = {
       heading: "1. Scope and roles",
       blocks: [
         {
+          type: "p",
+          text: "Where it applies, this addendum governs the relationship as follows:",
+        },
+        {
           type: "definition",
           items: [
             {
               term: "Customer data",
               detail:
-                "Personal data you provide to us, or that your end users provide to you and that you then send to us, for us to process to deliver the product.",
+                "Personal data you provide to us, or that your own users or employees provide to you and that you send to us, for us to process in order to deliver the service to you.",
             },
             {
               term: "Controller",
               detail:
-                "You, for customer data. You decide why it is processed and on what basis, and you are the one who owes your users their rights.",
+                "You, in respect of customer data. You decide why it is processed and on what basis, and you are the party responsible for your own users' rights.",
             },
             {
               term: "Processor",
               detail:
-                "Erstian, for customer data. We process it only on your documented instructions.",
+                "Erstian, in respect of customer data. We process it only on your documented instructions.",
             },
             {
               term: "Personal data",
               detail:
-                "Has the meaning given in the UK and EU GDPR. Special category data is covered by this addendum only where you have asked us to process it and the law allows it.",
+                "Has the meaning given in applicable data protection law. Special category data is in scope only where you have instructed us to process it and the law allows it.",
+            },
+            {
+              term: "Services",
+              detail:
+                "The Erstian products you have contracted for. This may include Internbird configured for your organisation, where your students or staff use it as part of a programme you administer.",
             },
           ],
+        },
+        {
+          type: "note",
+          text: "Where Erstian acts as a controller in its own right — for example for its own accounts, or for the individual users of Internbird who are not your employees or members — the Privacy Policy governs that processing, not this addendum.",
+        },
+      ],
+    },
+    {
+      id: "categories",
+      heading: "2. Categories of data and processing",
+      blocks: [
+        {
+          type: "p",
+          text: "Depending on the services, we may process:",
+        },
+        {
+          type: "ul",
+          items: [
+            "Identity and contact details: name, work email address, job title, organisation.",
+            "Account and authentication data: credentials, which we hold only as one-way hashes.",
+            "Usage data: pages or features accessed, timestamps, and device and browser information.",
+            "Support correspondence and anything you ask us to process on your users' behalf.",
+            "Transaction records, where the services include paid elements — limited to the reference, amount, date, status and the email address on the order.",
+          ],
+        },
+        {
+          type: "p",
+          text: "The purposes for which we process customer data are to provide and support the services, secure them, and comply with our legal obligations. We do not process customer data for our own advertising, and we do not sell it.",
+        },
+        {
+          type: "p",
+          text: `Where the services include ${internbird.name} used by your own students or staff, we may also process the profile, application and document information those individuals submit, and we may pass applications to third-party employers or programme providers on your users' behalf. We process that information as a processor on your instructions, and the access controls in our Security Policy apply to it.`,
         },
       ],
     },
     {
       id: "instructions",
-      heading: "2. Our obligations as processor",
+      heading: "3. Our obligations as processor",
       blocks: [
         {
           type: "p",
@@ -70,36 +116,41 @@ export const dpa: LegalDoc = {
         {
           type: "ul",
           items: [
-            "Process customer data only on your documented instructions, including about international transfers, unless the law requires otherwise — in which case we will tell you before processing unless that law forbids it.",
-            "Ensure that anyone we authorise to process it is bound by confidentiality obligations no less protective than those in this addendum.",
-            "Provide the information you need to demonstrate compliance with Article 28 GDPR, and let you take your own compliance audits with reasonable notice.",
-            "Assist you with data subject requests, security obligations and breach notification — see sections 4 and 5.",
-            "Make all information available to you so we can pass an audit, and not appoint a subprocessor without the notice described in section 3.",
+            "Process customer data only on your documented instructions, including instructions about international transfers, unless the law requires otherwise — in which case we will tell you before processing unless that law forbids it.",
+            "Ensure anyone we authorise to process it is bound by confidentiality obligations no less protective than those here.",
+            "Provide the information you need to demonstrate compliance with Article 28 GDPR where it applies, and let you take your own audits with reasonable notice.",
+            "Assist you with data subject requests, security obligations and breach notification, as described in sections 5 and 6.",
+            "Make available the information necessary for you to pass an audit, and not appoint a subprocessor without the notice described in section 4.",
+            "Notify you if we become aware that instructions given to us infringe applicable data protection law.",
           ],
         },
       ],
     },
     {
       id: "subprocessors",
-      heading: "3. Subprocessors",
+      heading: "4. Subprocessors",
       blocks: [
         {
           type: "p",
-          text: "We use a small number of infrastructure providers to run the product. Each one processes customer data only on our instructions, under a written contract that limits it to that purpose.",
+          text: "We use a small number of infrastructure providers to operate the services — hosting, database, email delivery and payment processing. Each processes customer data only on our instructions, under a written contract that limits it to that purpose.",
         },
         {
           type: "p",
-          text: "We will give you at least 30 days' notice before adding or replacing a subprocessor, and publish the current list in our privacy notice. If you object on reasonable data protection grounds and we cannot resolve it, you may terminate the affected part of the service without penalty.",
+          text: "We will give you at least 30 days' notice before adding or replacing a subprocessor. If you object on reasonable data protection grounds and we cannot resolve the concern, you may terminate the affected part of the service without penalty.",
         },
         {
           type: "p",
-          text: `Ask ${legalEntity.privacyEmail} for the current list at any time, including the processing each provider carries out and the country it runs in.`,
+          text: `Ask ${legalEntity.privacyEmail} for the current subprocessor list, including what each provider processes and where it operates.`,
+        },
+        {
+          type: "note",
+          text: "Our payment provider is a subprocessor for transaction data. Card credentials never reach us at all — they are collected on the provider's hosted page.",
         },
       ],
     },
     {
       id: "rights",
-      heading: "4. Data subject requests",
+      heading: "5. Data subject requests",
       blocks: [
         {
           type: "p",
@@ -107,17 +158,17 @@ export const dpa: LegalDoc = {
         },
         {
           type: "p",
-          text: "Taking a request off your hands is assistance under Article 28(3)(f) GDPR, and we provide it at no additional charge. Getting the underlying data out in a structured format is a separate export you can request at any time.",
+          text: "Handling a request on your behalf is assistance we provide at no additional charge. Providing the underlying data in a structured, portable format is a separate export you can request at any time.",
         },
       ],
     },
     {
       id: "security",
-      heading: "5. Security and breach",
+      heading: "6. Security and personal data breaches",
       blocks: [
         {
           type: "p",
-          text: "We take the technical and organisational measures set out in our Security Policy, and we will not reduce them during the life of this addendum.",
+          text: "We maintain the technical and organisational measures set out in our Security Policy, and we will not materially reduce them during the life of this addendum.",
         },
         {
           type: "p",
@@ -140,11 +191,11 @@ export const dpa: LegalDoc = {
     },
     {
       id: "transfers",
-      heading: "6. International transfers",
+      heading: "7. International transfers",
       blocks: [
         {
           type: "p",
-          text: "If a subprocessor processes customer data outside the UK or European Economic Area, we put an appropriate transfer mechanism in place first — the European Commission's standard contractual clauses, or an adequacy decision where one applies.",
+          text: "Where a subprocessor processes customer data outside India or the European Economic Area, we put an appropriate transfer mechanism in place first — standard contractual clauses, an adequacy decision where one applies, or another lawful safeguard.",
         },
         {
           type: "p",
@@ -154,21 +205,25 @@ export const dpa: LegalDoc = {
     },
     {
       id: "deletion",
-      heading: "7. End of the agreement",
+      heading: "8. Deletion and end of the agreement",
       blocks: [
         {
           type: "p",
-          text: "When this addendum ends, we will delete or return customer data at your choice, and delete remaining copies within 90 days unless the law requires us to keep them. If we keep anything, we will tell you what and why, and keep it protected the whole time.",
+          text: "When this addendum ends, we will delete or return customer data at your choice, and delete remaining copies within 90 days unless the law requires us to keep them. If we retain anything, we will tell you what and why, and keep it protected throughout.",
         },
         {
           type: "p",
-          text: "Where you ask us to return data, we will do it in a commonly used, machine-readable format, so it is genuinely portable rather than technically exportable.",
+          text: "Where you ask us to return data, we will provide it in a commonly used, machine-readable format, so it is genuinely portable rather than technically exportable.",
+        },
+        {
+          type: "p",
+          text: "Where an individual user's own data is held on your behalf, you remain responsible for instructing us to delete or return it. We do not delete an individual's account on a controller's behalf without that instruction.",
         },
       ],
     },
     {
       id: "order",
-      heading: "8. Order of precedence",
+      heading: "9. Order of precedence and governing terms",
       blocks: [
         {
           type: "p",
@@ -178,8 +233,12 @@ export const dpa: LegalDoc = {
           type: "p",
           text: `This addendum is governed by the same law and forum as the Terms & Conditions, and ${brand.url} is where the operative version of both is published.`,
         },
+        {
+          type: "p",
+          text: "A signed agreement between us takes precedence over this published version. Where we have not signed one, this document describes what we will do.",
+        },
       ],
     },
-    contactSection(9),
+    contactSection(10),
   ],
 };

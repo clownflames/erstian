@@ -14,6 +14,14 @@ import { absoluteUrl } from "@/lib/seo";
 const HOME_LAST_MODIFIED = new Date();
 const PAGE_LAST_MODIFIED = new Date("2026-01-15");
 
+/**
+ * Internbird is deliberately absent from this sitemap.
+ *
+ * It is a separate site on a subdomain and carries its own sitemap. A sitemap
+ * cannot hold cross-domain entries, and pointing one at internbird.erstian.com
+ * would produce a document that fails validation.
+ */
+
 /** Legal documents report their own effective date, not the build timestamp. */
 const legalEntries = legalDocs.map((doc) => ({
   url: absoluteUrl(doc.path),

@@ -13,7 +13,42 @@ export const brand = {
   tagline: "Software for real-world needs.",
   email: "hello@erstian.com",
   businessEmail: "business@erstian.com",
+  securityEmail: "security@erstian.com",
   url: "https://erstian.com",
+} as const;
+
+/**
+ * Internbird — a product/platform operated by Erstian.
+ *
+ * The single declaration of everything about Internbird on this site. Every page
+ * that mentions it imports from here, so the name, the URL and the description
+ * cannot drift apart across the marketing pages, the footer and the legal
+ * documents.
+ *
+ * Two things deliberately kept in this comment rather than the rendered copy:
+ * the brand casing ("Internbird", not "InternBird") and the single canonical
+ * URL. Both have been inconsistent before; centralising them is the fix.
+ *
+ * Internbird is described as a platform Erstian operates. It is not presented
+ * as a separate legal entity, because there is nothing in this project that
+ * says it is one.
+ */
+export const internbird = {
+  name: "Internbird",
+  /** The only Internbird URL used anywhere on this site. */
+  url: "https://internbird.erstian.com/",
+  /** One line. Used wherever a compact description is needed. */
+  summary:
+    "Internbird is a product/platform operated by Erstian that helps students discover internships, training programs, and career opportunities.",
+  /** Sentence form, for prose that is not a bullet point. */
+  prose:
+    "Internbird is a product/platform operated by Erstian. It helps students discover internships, training programs, and career opportunities, and manage the applications that follow.",
+  /** What it does, stated functionally rather than aspirationally. */
+  features: [
+    "Internship discovery matched to a student's skills and interests.",
+    "Training programs and career opportunities in one place.",
+    "Application and document management for students.",
+  ],
 } as const;
 
 /**
@@ -41,8 +76,28 @@ export const hero = {
   lead: "We build simple, useful and accessible software for businesses and everyday users.",
   body: "From productivity and business tools to solutions for everyday digital needs, Erstian creates products designed to make work easier, faster and more efficient.",
   primaryCta: { label: "Explore Erstian", href: "#about" },
-  secondaryCta: { label: "What's Coming", href: "#products" },
+  secondaryCta: { label: "Explore Internbird", href: internbird.url },
   scrollHint: "Scroll to explore",
+} as const;
+
+/**
+ * Internbird section on the home page.
+ *
+ * Its own numbered band rather than a card in the products grid, because it is
+ * the one product a visitor can use today — everything else on the page is
+ * described in terms of what is being built.
+ */
+export const internbirdSection = {
+  index: "05",
+  label: "Internbird",
+  heading: ["Internships,", "found for", "students."],
+  lead: internbird.summary,
+  body: "Internbird helps students cut through the noise: opportunities matched to what a student is actually good at, training programs worth their time, and every application in one place instead of a dozen browser tabs.",
+  features: internbird.features,
+  cta: { label: "Visit Internbird", href: internbird.url },
+  secondaryCta: { label: "Ask about Internbird", href: "/contact" },
+  footnote:
+    "Internbird is a product/platform operated by Erstian. Accounts, applications and payments are handled on the Internbird site, where its own terms and privacy notice apply alongside these.",
 } as const;
 
 export const about = {
@@ -71,17 +126,17 @@ export const whatWeBuild = {
     {
       number: "01",
       title: ["Business", "software"],
-      body: "Tools designed to help businesses manage tasks, workflows, operations and everyday processes more efficiently.",
+      body: "Tools designed to help businesses manage tasks, workflows, operations and everyday processes more efficiently. In development.",
     },
     {
       number: "02",
       title: ["Productivity", "tools"],
-      body: "Software that helps people organize work, save time and get more done.",
+      body: "Software that helps people organize work, save time and get more done. In development.",
     },
     {
       number: "03",
       title: ["Utility", "software"],
-      body: "Simple digital solutions for common problems faced by everyday users.",
+      body: "Simple digital solutions for common problems faced by everyday users. In development.",
     },
     {
       number: "04",
@@ -123,14 +178,15 @@ export const approach = {
 export const products = {
   index: "04",
   label: "Products",
-  heading: ["Something new is", "being built."],
-  body: "Erstian is currently building its first generation of software products.",
-  note: "Our product ecosystem will grow over time across different categories and use cases.",
-  cta: { label: "Stay Updated", href: "/updates" },
+  heading: ["One live,", "the rest in", "development."],
+  body: "Internbird is live and accepting registrations and payments. Alongside it, Erstian builds business software, productivity tools and utility software.",
+  note: "Our product ecosystem will grow over time. Certain products, features, programs or services may become available at different times.",
+  cta: { label: "Visit Internbird", href: internbird.url },
+  secondaryCta: { label: "See What's In Development", href: "/products" },
 } as const;
 
 export const forBusiness = {
-  index: "05",
+  index: "06",
   label: "For businesses",
   heading: ["Software that helps", "you work better."],
   paragraphs: [
@@ -142,7 +198,7 @@ export const forBusiness = {
 } as const;
 
 export const forEverydayUsers = {
-  index: "06",
+  index: "07",
   label: "For everyday users",
   heading: ["Useful software", "for everyday life."],
   paragraphs: [
@@ -154,7 +210,7 @@ export const forEverydayUsers = {
 } as const;
 
 export const whyErstian = {
-  index: "07",
+  index: "08",
   label: "Why Erstian",
   heading: ["Built around", "usefulness."],
   principles: [
@@ -187,7 +243,7 @@ export const whyErstian = {
 } as const;
 
 export const vision = {
-  index: "08",
+  index: "09",
   label: "Our vision",
   heading: ["A growing ecosystem", "of useful software."],
   lead: "Erstian starts with a simple idea:",
@@ -197,27 +253,27 @@ export const vision = {
 } as const;
 
 export const company = {
-  index: "09",
+  index: "10",
   label: "About",
   heading: ["We are building", "from the ground up."],
   paragraphs: [
-    "Erstian is a software company focused on creating public-facing digital products.",
-    "We are starting small, experimenting with ideas, learning from users and building toward a larger ecosystem of software products.",
+    "Erstian is a technology company that develops and operates digital products and services, including Internbird.",
+    "Internbird is live today and serves students directly. Alongside it we are building the next generation of software products, learning from real usage as we go.",
     "Our long-term goal is not to build software for the sake of having software.",
   ],
   emphasis: "It's to build products people choose to use.",
 } as const;
 
 export const comingSoon = {
-  heading: ["Something useful", "is coming."],
-  body: "We're just getting started.",
-  note: "Follow Erstian as we build software designed for the way people and businesses work today.",
-  primaryCta: { label: "See What's Coming", href: "/products" },
+  heading: ["More to come.", "Built the same way."],
+  body: "Internbird is live. The rest of our products are in development.",
+  note: "We publish what we are working on as it happens, so you can see where things stand instead of waiting for an announcement.",
+  primaryCta: { label: "See What's In Development", href: "/products" },
   secondaryCta: { label: "Follow Our Progress", href: "/updates" },
 } as const;
 
 export const contact = {
-  index: "10",
+  index: "12",
   label: "Contact",
   heading: ["Have an idea or want", "to work with us?"],
   body: "Whether you're interested in our upcoming products, have a business requirement, want to explore a partnership or simply want to connect — we'd like to hear from you.",
@@ -237,27 +293,41 @@ export const faqs = [
   {
     question: "What is Erstian?",
     answer:
-      "Erstian is a software company building public-facing digital products for businesses and everyday users.",
+      "Erstian is a technology company that develops and operates digital products and services, including Internbird.",
   },
   {
-    question: "What kind of software does Erstian build?",
-    answer:
-      "We are focused on practical software across business, productivity, utility and other everyday digital use cases.",
+    question: "What is Internbird?",
+    answer: internbird.summary,
   },
   {
-    question: "Are Erstian's products available now?",
+    question: "Is Internbird a separate company?",
     answer:
-      "We are currently at the beginning of our journey, with our first products being developed. More information will be announced as products become ready.",
+      "No. Internbird is a product/platform operated by Erstian. It is covered by the same Terms & Conditions, Privacy Policy and Refund & Cancellation Policy as the rest of our services.",
   },
   {
-    question: "Will Erstian offer subscription-based software?",
+    question: "What other products does Erstian operate?",
     answer:
-      "Yes. Subscription-based products will be an important part of Erstian's business model, alongside other possible product models.",
+      "Alongside Internbird, Erstian develops business software, productivity tools and utility software. Certain products, features, programs or services may become available at different times.",
+  },
+  {
+    question: "Are all products available now?",
+    answer:
+      "Not all of them. Internbird is live and accepting registrations and payments. Other products are in development, and we publish their status on our updates page.",
+  },
+  {
+    question: "How does Internbird handle payments?",
+    answer:
+      "Payments on Internbird are processed by a third-party payment provider. Erstian never receives or stores your card number, UPI PIN or any banking credential — the payment provider handles those directly.",
+  },
+  {
+    question: "Can I get a refund?",
+    answer:
+      "Yes, where the product allows it. Our Refund & Cancellation Policy explains eligibility, cancellation windows and how long a refund takes, including what happens if a payment fails or is duplicated.",
   },
   {
     question: "Who are Erstian's products for?",
     answer:
-      "Our products may serve businesses, teams, professionals and general users depending on the specific product.",
+      "Internbird serves students looking for internships, training and career opportunities. Other Erstian products serve businesses, teams and individuals depending on the product.",
   },
   {
     question: "Can I suggest a product idea?",
@@ -289,10 +359,12 @@ export const footer = {
       title: "Products",
       links: [
         { label: "Overview", href: "/products" },
+        // External. `SiteFooter` renders any non-`#` href as a plain link, so
+        // this opens in the same tab like the internal routes do.
+        { label: "Internbird", href: internbird.url },
         { label: "Business Software", href: "#solutions" },
         { label: "Productivity", href: "#what-we-build" },
-        { label: "Utilities", href: "#what-we-build" },
-        { label: "Coming Soon", href: "#products" },
+        { label: "In development", href: "#products" },
       ],
     },
     {
@@ -300,6 +372,7 @@ export const footer = {
       links: [
         { label: "FAQ", href: "/faq" },
         { label: "Contact us", href: "/contact" },
+        { label: "Updates", href: "/updates" },
         { label: "Security", href: "/security" },
         { label: "Accessibility", href: "/accessibility" },
       ],
@@ -310,8 +383,9 @@ export const footer = {
         { label: "All documents", href: "/legal" },
         { label: "Privacy Policy", href: "/privacy" },
         { label: "Terms & Conditions", href: "/terms" },
-        { label: "Refund Policy", href: "/refunds" },
+        { label: "Refund & Cancellation", href: "/refunds" },
         { label: "Cookie Policy", href: "/cookies" },
+        { label: "Data Processing", href: "/dpa" },
       ],
     },
   ],

@@ -1,4 +1,4 @@
-import { brand } from "@/lib/content";
+import { brand, internbird } from "@/lib/content";
 import { legalEntity } from "@/lib/legal/entity";
 import { contactSection } from "@/lib/legal/shared";
 import type { LegalDoc } from "@/lib/legal/types";
@@ -10,6 +10,10 @@ import type { LegalDoc } from "@/lib/legal/types";
  * "partially conformant" rather than "fully": naming the specific gaps is more
  * useful to a reader with a disability than a badge, and it is the only version
  * of this claim that stays true as the site changes.
+ *
+ * Scope is this website. Internbird is a separate application with accounts and
+ * forms, so it gets its own section rather than being implied to inherit a
+ * conformance level it has not been assessed against.
  */
 export const accessibility: LegalDoc = {
   slug: "accessibility",
@@ -20,10 +24,10 @@ export const accessibility: LegalDoc = {
   summary:
     "Our accessibility target for erstian.com, what is not yet perfect, and how to tell us about a barrier.",
   description:
-    "Erstian's accessibility commitment for erstian.com: the standard we work to, known limitations, and how to report a barrier.",
+    "Erstian's accessibility commitment for erstian.com and Internbird: the standard we work to, known limitations, and how to report a barrier.",
   effective: "2026-01-15",
   intro: [
-    "We want this site to be usable by everyone, including people who browse with a keyboard, a screen reader, magnification, or reduced motion and contrast settings.",
+    "We want our services to be usable by everyone, including people who browse with a keyboard, a screen reader, magnification, or reduced motion and contrast settings.",
     "This statement says what we aim for, what we have got right, and what we have not fixed yet. It is a working document, not a badge.",
   ],
   related: ["security", "privacy", "terms"],
@@ -38,28 +42,51 @@ export const accessibility: LegalDoc = {
             {
               term: "Standard",
               detail:
-                "Web Content Accessibility Guidelines (WCAG) 2.2, Level AA. WCAG 2.2 is the current W3C recommendation and is what the European Accessibility Act and the UK Public Sector Bodies regulations point at.",
+                "Web Content Accessibility Guidelines (WCAG) 2.2, Level AA — the current W3C recommendation, and what the European Accessibility Act and the UK Public Sector Bodies regulations point at.",
             },
             {
               term: "Conformance status",
               detail:
-                "Partially conformant. The site meets the requirements listed as met below. The known gaps in section 3 are real and unfixed.",
+                "Partially conformant on erstian.com. The requirements listed as met below are met; the known gaps in section 4 are real and unfixed. The status of Internbird is assessed separately — see section 2.",
             },
             {
               term: "Applies to",
-              detail: `This statement covers ${brand.url} and every page linked from it, including the legal documents. It does not cover third-party sites we link to, which we do not control.`,
+              detail: `This statement covers ${brand.url} and every page linked from it, including the legal documents. It does not cover ${internbird.name}, which is a separate application, nor third-party sites we link to.`,
             },
             {
               term: "Last reviewed",
-              detail: "Reviewed whenever the site's structure changes, and at minimum annually.",
+              detail:
+                "Reviewed whenever the site's structure changes, and at minimum annually.",
             },
           ],
         },
       ],
     },
     {
+      id: "internbird",
+      heading: "2. Internbird",
+      blocks: [
+        {
+          type: "p",
+          text: `${internbird.name} is a separate application operated by Erstian. Because it is functionally different — it has accounts, forms and user-submitted content — we assess it separately rather than folding it into this statement.`,
+        },
+        {
+          type: "p",
+          text: "Our aim is the same WCAG 2.2 Level AA target, approached from what a screen-reader or keyboard user actually needs on a platform with sign-in, application forms and document upload. We are still working toward it.",
+        },
+        {
+          type: "p",
+          text: "This statement does not describe how accessible Internbird currently is, and we are not going to imply a conformance level we have not assessed. If you need accommodation to use Internbird — for example a form completed another way — contact us and we will help.",
+        },
+        {
+          type: "note",
+          text: "Being honest that this is unfinished is more useful than a claim of full conformance. Where an accessibility barrier blocks someone from applying for an opportunity, that is worth telling us immediately.",
+        },
+      ],
+    },
+    {
       id: "measures",
-      heading: "2. How we build",
+      heading: "3. How we build",
       blocks: [
         {
           type: "p",
@@ -87,7 +114,7 @@ export const accessibility: LegalDoc = {
     },
     {
       id: "known-gaps",
-      heading: "3. Known limitations",
+      heading: "4. Known limitations",
       blocks: [
         {
           type: "p",
@@ -110,7 +137,7 @@ export const accessibility: LegalDoc = {
     },
     {
       id: "alternatives",
-      heading: "4. Alternatives and format",
+      heading: "5. Alternatives and format",
       blocks: [
         {
           type: "p",
@@ -124,7 +151,7 @@ export const accessibility: LegalDoc = {
     },
     {
       id: "feedback",
-      heading: "5. Feedback and enforcement",
+      heading: "6. Feedback and enforcement",
       blocks: [
         {
           type: "p",
@@ -138,7 +165,7 @@ export const accessibility: LegalDoc = {
     },
     {
       id: "changes",
-      heading: "6. Changes to this statement",
+      heading: "7. Changes to this statement",
       blocks: [
         {
           type: "p",
@@ -146,6 +173,6 @@ export const accessibility: LegalDoc = {
         },
       ],
     },
-    contactSection(7),
+    contactSection(8),
   ],
 };

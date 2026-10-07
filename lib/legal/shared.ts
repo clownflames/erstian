@@ -15,7 +15,9 @@ export function contactSection(number: number): LegalSection {
   const address = optional(legalEntity.registeredAddress);
 
   const paragraphs: string[] = [
-    `Questions about this document, or a privacy request, can be sent to ${legalEntity.privacyEmail}. We read every message and aim to respond within 30 days.`,
+    `Questions about this document can be sent to ${legalEntity.privacyEmail}. We read every message and aim to respond within 30 days.`,
+    "If you have a billing or refund question, email " +
+      `${legalEntity.billingEmail} with the email address on your account and the order or transaction reference, and we will pick it up from there.`,
     "If you are in the EEA, the UK or Switzerland and are unhappy with how we have handled your data, you may also complain to your local supervisory authority.",
   ];
 
@@ -29,11 +31,13 @@ export function contactSection(number: number): LegalSection {
         ? [
             {
               type: "p" as const,
-              text: `Company registration number: ${registration}.`,
+              text: `Registration number: ${registration}.`,
             },
           ]
         : []),
-      { type: "p", text: `Email: ${legalEntity.privacyEmail}` },
+      { type: "p", text: `General and privacy: ${legalEntity.privacyEmail}` },
+      { type: "p", text: `Billing and refunds: ${legalEntity.billingEmail}` },
+      { type: "p", text: `Security reports: ${legalEntity.securityEmail}` },
       ...paragraphs.map((text) => ({ type: "p" as const, text })),
     ],
   };

@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import {
   CardGrid,
   DashList,
@@ -46,6 +48,29 @@ export function ContactPage() {
               }))}
             />
           </div>
+        </PageSection>
+
+        {/* Internbird pointer ------------------------------------------ */}
+        <PageSection id="internbird" label="Internbird">
+          <p className="text-lead max-w-[46ch] text-bone">
+            Questions about an Internbird account, application or payment?
+          </p>
+          <p className="mt-5 max-w-[52ch] text-body text-fog">
+            {contactPage.internbird.note}
+          </p>
+
+          <Link
+            href={contactPage.internbird.url}
+            className="label-xs group mt-8 inline-flex items-center gap-3 border border-line px-6 py-3.5 text-bone transition-colors duration-500 hover:border-transparent hover:bg-bone hover:text-ink"
+          >
+            Go to {contactPage.internbird.name}
+            <span
+              aria-hidden
+              className="transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1"
+            >
+              →
+            </span>
+          </Link>
         </PageSection>
 
         {/* What happens next ------------------------------------------ */}
